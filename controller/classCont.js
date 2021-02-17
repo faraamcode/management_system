@@ -1,22 +1,26 @@
 const express = require('express');
 const pool = require('../db/connect');
+const Query = require("../model/queryClass")
 exports.getClass = async(req, res, next)=>{
-  const result = await pool.query("SELECT * FROM class_tbl");
-  const data = await result.rows
+  const data =  await Query.fetchAll("class_tbl");
   if (data) {
-   
    return res.send(data)
   }
  }
+
+
  exports.postClass = async(req, res, next)=>{
  const class_name = req.body.class_name;
- const result = await pool.query("INSERT INTO class_tbl (class_name) VALUES ($1)",[class_name])
+ const Querynew = new Query("class_tbl", ["class_name"])
+ Querynew.turnArray();
+ const result = await Querynew.postAll([class_name]);
  if (result) {
   return res.send({
    "message": "class saved"
   })
  }
 }
+
 exports.updateById = async(req, res, next)=>{
  const class_id = req.params.id;
  const class_name = req.body.class_name
@@ -27,7 +31,7 @@ exports.updateById = async(req, res, next)=>{
 }
 exports.getClassById = async(req, res, next)=>{
  const class_id = req.params.id
- const result = await pool.query("SELECT * FROM class_tbl WHERE id= $1", [class_id])
- const data = await result.rows
- res.send(data)
+const Querynew = new Query("class_tbl", null);
+const result = await Querynew.fetchByid(class_id);
+ res.send(result)
 }
