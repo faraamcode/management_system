@@ -6,15 +6,7 @@ const subjectController = require("../controller/subjectCont")
 // reading of subject table
 router.get("/subject", subjectController.getSubject)
 // creating a new subject on the table
-router.post("/subject", async(req, res, next)=>{
- const subject_name = req.body.subject_name;
- const result = await pool.query("INSERT INTO subject_tbl (subject_name) VALUES ($1)",[subject_name])
- if (result) {
-  return res.send({
-   "message": "subject saved"
-  })
- }
-})
+router.post("/subject", )
 //  updating class table by id
 router.post("/subject/:id", async(req, res, next)=>{
  const subject_id = req.params.id;

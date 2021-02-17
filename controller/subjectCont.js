@@ -10,7 +10,8 @@ exports.getSubject = async(req, res, next)=>{
 }
 exports.postSubject = async(req, res, next)=>{
  const subject_name = req.body.subject_name;
- const result = await pool.query("INSERT INTO subject_tbl (subject_name) VALUES ($1)",[subject_name])
+ const Querynew = new Query("subject_tbl", ["subject_name"])
+ const result = Querynew.postAll([subject_name])
  if (result) {
   return res.send({
    "message": "subject saved"
@@ -28,7 +29,9 @@ exports.postSubjectById = async(req, res, next)=>{
 }
 exports.getSubjectById = async(req, res, next)=>{
  const subject_id = req.params.id
- const result = await pool.query("SELECT * FROM subject_tbl WHERE id= $1", [subject_id])
- const data = await result.rows
+ // const result = await pool.query("SELECT * FROM subject_tbl WHERE id= $1", [subject_id])
+ const Querynew = new Query("subject_tbl", null)
+
+ const data = await Querynew.fetchByid(subject_id)
  res.send(data)
 }
