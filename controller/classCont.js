@@ -60,3 +60,18 @@ exports.getClassById = async (req, res, next) => {
   const result = await Querynew.fetchByid(class_id)
   res.send(result)
 }
+exports.deleteClassById = async (req, res, next) => {
+  const id = req.params.id
+  const table = 'class_tbl'
+  const field = 'id'
+  const result = await Query.deleteByID(table, field, [id])
+  if (result === 1) {
+    res.send({
+      message: 'class deleted succesfully',
+    })
+  } else {
+    res.send({
+      message: 'error occured',
+    })
+  }
+}

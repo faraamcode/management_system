@@ -68,4 +68,14 @@ module.exports = class Query {
     )
     return this.result.rowCount
   }
+  static async deleteByID(table, field, idValue) {
+    this.table = table
+    this.field = field
+    this.idValue = idValue
+    const result = await pool.query(
+      `DELETE FROM ${this.table} WHERE ${this.field} = $1`,
+      this.idValue
+    )
+    return result.rowCount
+  }
 }
