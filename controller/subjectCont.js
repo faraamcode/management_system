@@ -8,6 +8,7 @@ exports.getSubject = async (req, res, next) => {
     return res.send(data)
   }
 }
+
 exports.postSubject = async (req, res, next) => {
   const subject_name = req.body.subject_name
   const Querynew = new Query('subject_tbl', ['subject_name'])
@@ -22,10 +23,27 @@ exports.postSubject = async (req, res, next) => {
 exports.postSubjectById = async (req, res, next) => {
   const subject_id = req.params.id
   const subject_name = req.body.subject_name
-  const result = await pool.query(
-    'UPDATE subject_tbl SET subject_name = $1 WHERE id = $2',
-    [subject_name, subject_id]
+  const table = 'subject_tbl'
+  const fieldvalue = [subject_name]
+  const updatefield = 'id'
+  const updatevalue = [subject_id]
+  const fields = await Query.turnUpdateArray(['subject_name'])
+  const result = await Query.updateByID(
+    table,
+    fields,
+    fieldvalue,
+    updatefield,
+    updatevalue
   )
+  if (result === 1) {
+    res.send({
+      message: 'upaded succesfully',
+    })
+  } else {
+    res.send({
+      message: 'error occured',
+    })
+  }
   res.send({
     message: 'subject updated successfully',
   })

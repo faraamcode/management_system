@@ -46,13 +46,6 @@ exports.updateById = async (req, res, next) => {
       message: 'error occured',
     })
   }
-  //   const result = await pool.query(
-  //     'UPDATE class_tbl SET class_name = $1 WHERE id = $2',
-  //     [class_name, class_id]
-  //   )
-  //   res.send({
-  //     message: 'class updated successfully',
-  //   })
 }
 exports.getClassById = async (req, res, next) => {
   const class_id = req.params.id
