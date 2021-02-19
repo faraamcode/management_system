@@ -68,6 +68,7 @@ module.exports = class Query {
     )
     return this.result.rowCount
   }
+
   static async deleteByID(table, field, idValue) {
     this.table = table
     this.field = field

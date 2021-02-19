@@ -54,3 +54,18 @@ exports.getSubjectById = async (req, res, next) => {
   const data = await Querynew.fetchByid(subject_id)
   res.send(data)
 }
+exports.deleteSubjectById = async (req, res, next) => {
+  const field = 'id'
+  const table = 'subject_tbl'
+  const subject_id = [req.params.id]
+  const result = await Query.deleteByID(table, field, subject_id)
+  if (result === 1) {
+    res.send({
+      message: 'subject deleted!',
+    })
+  } else {
+    res.send({
+      message: 'error occured',
+    })
+  }
+}
