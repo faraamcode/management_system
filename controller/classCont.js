@@ -1,6 +1,7 @@
 const express = require('express')
 const pool = require('../db/connect')
 const Query = require('../model/queryClass')
+const table = 'class_tbl'
 exports.getClass = async (req, res, next) => {
   const data = await Query.fetchAll('class_tbl')
   const result = await Query.turnUpdateArray(['adewale'])
@@ -55,7 +56,7 @@ exports.getClassById = async (req, res, next) => {
 }
 exports.deleteClassById = async (req, res, next) => {
   const id = req.params.id
-  const table = 'class_tbl'
+
   const field = 'id'
   const result = await Query.deleteByID(table, field, [id])
   if (result === 1) {

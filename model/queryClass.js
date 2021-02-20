@@ -23,10 +23,17 @@ module.exports = class Query {
   // inserting all data into a table
   async postAll(values) {
     this.values = values
+    this.fieldvalueNumber = this.values
+      .map((items, index) => {
+        return `$${index + 1}`
+      })
+      .join(', ')
+
     this.result = await pool.query(
-      `INSERT INTO ${this.tablename} (${this.fieldname}) VALUES ($1)`,
+      `INSERT INTO ${this.tablename} (${this.fieldname}) VALUES (${this.fieldvalueNumber})`,
       this.values
     )
+
     return this.result
   }
   // fetching a data by id
