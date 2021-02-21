@@ -37,10 +37,11 @@ module.exports = class Query {
     return this.result
   }
   // fetching a data by id
-  async fetchByid(id) {
+  async fetchByid(id, field) {
+    this.field = field
     this.id = id
     this.result = await pool.query(
-      `SELECT * FROM ${this.tablename} WHERE id= $1`,
+      `SELECT * FROM ${this.tablename} WHERE ${this.field}= $1`,
       [this.id]
     )
     this.data = await this.result.rows

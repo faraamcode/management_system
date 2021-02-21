@@ -51,7 +51,7 @@ exports.postSubjectById = async (req, res, next) => {
 exports.getSubjectById = async (req, res, next) => {
   const subject_id = req.params.id
   const Querynew = new Query('subject_tbl', null)
-  const data = await Querynew.fetchByid(subject_id)
+  const data = await Querynew.fetchByid(subject_id, 'id')
   res.send(data)
 }
 exports.deleteSubjectById = async (req, res, next) => {

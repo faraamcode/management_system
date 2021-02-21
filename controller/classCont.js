@@ -51,7 +51,7 @@ exports.updateById = async (req, res, next) => {
 exports.getClassById = async (req, res, next) => {
   const class_id = req.params.id
   const Querynew = new Query('class_tbl', null)
-  const result = await Querynew.fetchByid(class_id)
+  const result = await Querynew.fetchByid(class_id, 'id')
   res.send(result)
 }
 exports.deleteClassById = async (req, res, next) => {
