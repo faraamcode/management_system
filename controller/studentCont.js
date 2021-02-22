@@ -86,13 +86,41 @@ exports.deletebyAdmission = async (req, res, next) => {
 }
 
 // updating subject combination using class id
-exports.updateSubjectCombById = async (req, res, next) => {
-  const subject_id = req.body.subject_id
-  const class_id = req.body.class_id
-  const fieldvalue = [subject_id]
-  const updatefield = 'class_id'
-  const updatevalue = [class_id]
-  const fields = await Query.turnUpdateArray(['subject_id'])
+exports.updateStudentByAdmission = async (req, res, next) => {
+  const fieldvalue = [
+    req.body.last_name,
+    req.body.other_names,
+    req.body.parent_no,
+    req.body.home_address,
+    req.body.admission_type,
+    req.body.gender,
+    req.body.date_of_birth,
+    req.body.class_id,
+    req.body.passport,
+    req.body.parent_name,
+    req.body.parent_email,
+    req.body.parent_occupation,
+    req.body.class_section_name,
+  ]
+  const field = [
+    'last_name',
+    'other_names',
+    'parent_no',
+    'home_address',
+    'admission_type',
+    'gender',
+    'date_of_birth',
+    'class_id',
+    'passport',
+    'parent_name',
+    'parent_email',
+    'parent_occupation',
+    'class_section_name',
+  ]
+
+  const updatefield = 'admission_no'
+  const updatevalue = [req.body.admission_no]
+  const fields = await Query.turnUpdateArray(field)
   const result = await Query.updateByID(
     table,
     fields,

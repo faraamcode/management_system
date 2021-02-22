@@ -52,10 +52,9 @@ module.exports = class Query {
   static turnUpdateArray(fields) {
     this.fields = fields // array is expected
     this.data = this.fields
-      .map((field) => {
-        let id = 1
-        const value = `${field} = $${id}`
-        id++
+      .map((field, index) => {
+        const value = `${field} = $${index + 1}`
+
         return value
       })
       .join(', ')
@@ -74,6 +73,7 @@ module.exports = class Query {
       }`,
       this.fieldvalueupdated
     )
+
     return this.result.rowCount
   }
 
