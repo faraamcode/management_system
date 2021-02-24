@@ -51,7 +51,7 @@ module.exports = class Query {
   static turnUpdateArray(fields) {
     this.fields = fields // array is expected
     this.data = this.fields
-      .map((field, index) => {
+     .map((field, index) => {
         const value = `${field} = $${index + 1}`
 
         return value
@@ -64,6 +64,18 @@ module.exports = class Query {
     this.data = this.fields
       .map((field, index) => {
         const value = `${field} = $${index + 1}`
+
+        return value
+      })
+      .join(' AND ')
+    return this.data
+  }
+  static turnUpdateArrayWithANDWithStartIndex(fields, start) {
+    this.fields = fields // array is expected
+    this.start = start + 1
+    this.data = this.fields
+      .map((field, index) => {
+        const value = `${field} = $${index + this.start}`
 
         return value
       })

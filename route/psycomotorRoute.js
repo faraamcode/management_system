@@ -15,6 +15,6 @@ router.post("/psycomotor/delete", psycomotorController.DeletePsycomotor)
 router.post("/psycomotor/",)
 
 // updating a single psycomotore record using admission, term, session and sycomotor name
-router.post("/psycomotor/update", )
+router.post("/psycomotor/update", psycomotorController.UpdatePsycomotor)
 
 module.exports = router

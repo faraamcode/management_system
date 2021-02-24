@@ -68,3 +68,20 @@ exports.insertNewPsycomotor = async (req, res, next) => {
       })
     }
   }
+  // updating psycomotor by multiple clause
+
+  exports.UpdatePsycomotor = async (req, res, next) => {
+    const updatefields = ['grade']
+    const clausefields = ['admission_no', 'term', 'session', 'sycomoto_name']
+    const fieldvalue = [req.body.grade, req.body.admission_no, req.body.term, req.body.session, req.body.sycomoto_name]
+    const result = await Query.UpdateWithMultiple(table, updatefields, clausefields, fieldvalue)
+    if (result === 1) {
+      res.send({
+        message: `${req.body.admission_no} psycomotor successfully updated`,
+      })
+    }else{
+        res.send({
+            "message" : "error occured"
+        })
+    }
+  }

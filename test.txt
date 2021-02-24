@@ -1,0 +1,11 @@
+    "first_name" :"daehsh",
+    "other_name" : "alhaji aledawura",
+    "gender" : "female",
+    "phone_no" : "gajjsh",
+    "email" : "alhaji@gmail.com",
+    "title" : "mathematetics teacher",
+    "class_id" : "6",
+    "role" : "staff",
+    "subject_id": "9"
+
+    
