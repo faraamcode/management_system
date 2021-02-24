@@ -1,0 +1,20 @@
+const pool = require('../db/connect')
+const express = require('express')
+const psycomotorController = require('../controller/psycomotorCont')
+const router = express.Router()
+
+//  get all the psycomotor 
+router.get('/psycomotor', psycomotorController.fetchAllpsycomotor)
+
+// inserting new psycomotor
+router.post("/psycomotor",psycomotorController.insertNewPsycomotor)
+// delete new psycomotor using admission, term, session, sycomotor name
+router.post("/psycomotor/delete", psycomotorController.DeletePsycomotor)
+
+//  getting   sycomotors using admission, term, session
+router.post("/psycomotor/",)
+
+// updating a single psycomotore record using admission, term, session and sycomotor name
+router.post("/psycomotor/update", )
+
+module.exports = router

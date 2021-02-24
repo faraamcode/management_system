@@ -48,7 +48,6 @@ module.exports = class Query {
 
     return this.data
   }
-  // update by id
   static turnUpdateArray(fields) {
     this.fields = fields // array is expected
     this.data = this.fields
@@ -60,6 +59,18 @@ module.exports = class Query {
       .join(', ')
     return this.data
   }
+  static turnUpdateArrayWithAND(fields) {
+    this.fields = fields // array is expected
+    this.data = this.fields
+      .map((field, index) => {
+        const value = `${field} = $${index + 1}`
+
+        return value
+      })
+      .join(' AND ')
+    return this.data
+  }
+  // update by id
   static async updateByID(table, field, fieldvalue, updatefield, updateValeu) {
     this.table = table // string
     this.field = field // turn it to string with turnUpdateArray()
