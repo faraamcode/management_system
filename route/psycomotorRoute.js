@@ -12,7 +12,7 @@ router.post("/psycomotor",psycomotorController.insertNewPsycomotor)
 router.post("/psycomotor/delete", psycomotorController.DeletePsycomotor)
 
 //  getting   sycomotors using admission, term, session
-router.post("/psycomotor/",)
+router.post("/psycomotor/term", psycomotorController.fetchByMultiple)
 
 // updating a single psycomotore record using admission, term, session and sycomotor name
 router.post("/psycomotor/update", psycomotorController.UpdatePsycomotor)

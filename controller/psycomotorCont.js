@@ -85,3 +85,13 @@ exports.insertNewPsycomotor = async (req, res, next) => {
         })
     }
   }
+//   fetching psycomotor using multiple 
+
+exports.fetchByMultiple = async(req, res, next)=>{
+    const fields = ['admission_no', 'term', 'session']
+    const fieldvalue = [req.body.admission_no, req.body.term, req.body.session]
+    const result = await Query.fetchByMultiple(table, fields, fieldvalue)
+   
+      res.send(result)
+
+}
