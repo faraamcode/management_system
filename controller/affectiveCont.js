@@ -95,3 +95,4 @@ exports.fetchByMul = async(req, res, next)=>{
       res.send(result)
 
 }
+

@@ -5,6 +5,7 @@ module.exports = class Psycomotor extends Query{
     constructor(tablename, fieldname) {
         super(tablename, fieldname)
       }
+      
     //  deleting with multiple parameters
     static async DeleteWithMultiple(table, fields, fieldvalue){
      this.table = table 
