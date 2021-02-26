@@ -1,4 +1,5 @@
 const express = require('express')
+const jwt = require("jsonwebtoken")
 const pool = require('../db/connect')
 const Query = require('../model/queryClass')
 const table = 'students_tbl'
@@ -153,4 +154,17 @@ exports.getStudentByAdmission = async (req, res, next) => {
   const Querynew = new Query(table, null)
   const result = await Querynew.fetchByid(admission_no, 'admission_no')
   res.send(result)
+}
+//  student login
+exports.studentSignIn = async (req, res, next)=> {
+ const admission_no = req.body.admission_no
+ const surname = req.body.last_name
+ const user ={
+   admission_no,
+   surname
+ }
+ jwt.sign({user}, "roemichs", (error, token)=>{
+   res.send({token})
+ })
+
 }

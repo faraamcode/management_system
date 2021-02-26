@@ -18,4 +18,5 @@ router.post('/student/admission', studentController.getStudentByAdmission)
 router.post('/student/delete', studentController.deletebyAdmission)
 router.post('/student', studentController.insertNewStudent)
 router.post('/student/update', studentController.updateStudentByAdmission)
+router.post("/student/login", studentController.studentSignIn)
 module.exports = router
