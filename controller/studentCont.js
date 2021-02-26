@@ -184,19 +184,36 @@ exports.studentSignIn = async (req, res, next)=> {
   const Querynew = new Query(table, null)
 
 const result = await Querynew.fetchByid(admission_no, 'admission_no');
+//  chech to know if the user exist as a student
 if (result.length === 1) {
-  res.send(result)
+  const dbpassword = result[0].password
+  const access = await bcrypt.compare(password, dbpassword);
+  //  check to know if the password is correct
+  if (access) {
+    // set other detail and token for other route
+    const otherDetails = result[0]
+    const user = {
+      admission_no,
+      password
+    }
+    jwt.sign({user}, "roemichs", (err, token)=>{
+      return res.send({otherDetails, token})
+    })
+    
+  }else{
+
+    return res.status(401).json({
+      message : "Invalid password"
+    })
+  }
 }else{
   res.status(401).json({
     message : "user does not exist"
   })
 }
-//  chech to know if the user exist as a student
 
 
-//  check to know if the password is correct
 
-// set other detail and token for other route
 
 
 //  const user ={
