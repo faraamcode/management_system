@@ -24,55 +24,73 @@ exports.fechAllStudents = async (req, res, next) => {
 //  inserting new student into the table
 
 exports.insertNewStudent = async (req, res, next) => {
-  const fieldvalue = [
-    req.body.admission_no,
-    req.body.last_name,
-    req.body.other_names,
-    req.body.parent_no,
-    req.body.home_address,
-    req.body.admission_type,
-    req.body.gender,
-    req.body.date_of_birth,
-    req.body.class_id,
-    req.body.passport,
-    req.body.parent_name,
-    req.body.parent_email,
-    req.body.parent_occupation,
-    req.body.class_section_name,
-  ]
-  const field = [
-    'admission_no',
-    'last_name',
-    'other_names',
-    'parent_no',
-    'home_address',
-    'admission_type',
-    'gender',
-    'date_of_birth',
-    'class_id',
-    'passport',
-    'parent_name',
-    'parent_email',
-    'parent_occupation',
-    'class_section_name',
-  ]
-
-  const QueryInstance = new Query(table, field)
-  QueryInstance.turnArray()
-  try {
-    const result = await QueryInstance.postAll(fieldvalue)
-    if (result.rowCount === 1) {
-      res.send({
-        message: 'new  student added saved',
-      })
-    } else {
-      res.send({
-        message: 'error occured',
-      })
+  //  checking if the user already exist
+  const Querynew = new Query(table, null)
+  const ifExist = await Querynew.fetchByid(req.body.admission_no, 'admission_no')
+  if (ifExist.length === 1) {
+    return res.send({
+      message : "user already exist"
+    })
+  }else if (ifExist.length === 0) {
+    
+    
+    const hashed = await bcrypt.hash(req.body.password, 10)
+    const fieldvalue = [
+      req.body.admission_no,
+      req.body.last_name,
+      req.body.other_names,
+      req.body.parent_no,
+      req.body.home_address,
+      req.body.admission_type,
+      req.body.gender,
+      req.body.date_of_birth,
+      req.body.class_id,
+      req.body.passport,
+      req.body.parent_name,
+      req.body.parent_email,
+      req.body.parent_occupation,
+      req.body.class_section_name,
+      hashed
+    ]
+    const field = [
+      'admission_no',
+      'last_name',
+      'other_names',
+      'parent_no',
+      'home_address',
+      'admission_type',
+      'gender',
+      'date_of_birth',
+      'class_id',
+      'passport',
+      'parent_name',
+      'parent_email',
+      'parent_occupation',
+      'class_section_name',
+      'password'
+    ]
+  
+    const QueryInstance = new Query(table, field)
+    QueryInstance.turnArray()
+    try {
+      const result = await QueryInstance.postAll(fieldvalue)
+      if (result.rowCount === 1) {
+        res.send({
+          message: 'new  student added saved',
+        })
+      } else {
+        res.send({
+          message: 'error occured',
+        })
+      }
+    } catch (error) {
+      console.log(error)
+      res.send({ error })
     }
-  } catch (error) {
-    console.log(error)
-    res.send({ error })
+  }else{
+   return res.send({
+     message : "error "
+   })
   }
 }
 // deleting students by admission no
@@ -89,6 +107,7 @@ exports.deletebyAdmission = async (req, res, next) => {
 
 // updating subject combination using class id
 exports.updateStudentByAdmission = async (req, res, next) => {
+  const hashed = await bcrypt.hash(req.body.password, 10)
   const fieldvalue = [
     req.body.last_name,
     req.body.other_names,
@@ -103,6 +122,7 @@ exports.updateStudentByAdmission = async (req, res, next) => {
     req.body.parent_email,
     req.body.parent_occupation,
     req.body.class_section_name,
+    hashed
   ]
   const field = [
     'last_name',
@@ -118,6 +138,7 @@ exports.updateStudentByAdmission = async (req, res, next) => {
     'parent_email',
     'parent_occupation',
     'class_section_name',
+    'password'
   ]
 
   const updatefield = 'admission_no'
@@ -158,14 +179,32 @@ exports.getStudentByAdmission = async (req, res, next) => {
 }
 //  student login
 exports.studentSignIn = async (req, res, next)=> {
- const admission_no = req.body.admission_no
- const surname = req.body.last_name
- const user ={
-   admission_no,
-   surname
- }
- jwt.sign({user}, "roemichs", (error, token)=>{
-   res.send({token})
- })
+  const admission_no = req.body.admission_no
+  const password = req.body.password
+  const Querynew = new Query(table, null)
+
+const result = await Querynew.fetchByid(admission_no, 'admission_no');
+if (result.length === 1) {
+  res.send(result)
+}else{
+  res.status(401).json({
+    message : "user does not exist"
+  })
+}
+//  chech to know if the user exist as a student
+
+
+//  check to know if the password is correct
+
+// set other detail and token for other route
+
+
+//  const user ={
+//    admission_no,
+//    surname
+//  }
+//  jwt.sign({user}, "roemichs", (error, token)=>{
+//    res.send({token})
+//  })
 
 }
