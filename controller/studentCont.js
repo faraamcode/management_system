@@ -214,14 +214,4 @@ if (result.length === 1) {
 
 
 
-
-
-//  const user ={
-//    admission_no,
-//    surname
-//  }
-//  jwt.sign({user}, "roemichs", (error, token)=>{
-//    res.send({token})
-//  })
-
 }
