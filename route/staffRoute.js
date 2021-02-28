@@ -3,6 +3,14 @@ const express = require('express')
 const staffController = require('../controller/staffCont')
 const router = express.Router()
 
+const verifyToken = (req, res, next) => {
+   let token = req.body.token || req.header.Authorization || req.header['x-auth-token'] || req.header.token
+   if(!token) return res.status(401).send('unauthorized!!!')
+   token = token.split(' ')[1]
+   req.token = token 
+   next()
+}
+
 //  get the entire staff data
 router.get('/staff',staffController.fechAllStaffs)
 

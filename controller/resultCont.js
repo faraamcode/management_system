@@ -68,7 +68,7 @@ exports.getStudentTermResult = async(req, res, next)=>{
         'term',
         'session'
       ] 
-      const result = await QueryMultiple.fetchByMultiple(table, field, fieldvalue)
+const result = await QueryMultiple.fetchByMultiple(table, field, fieldvalue)
 if(result.length === 0){
     return res.send({
         message : "no result found"
@@ -82,6 +82,7 @@ if(result.length === 0){
 }
 }
 // getting mideterm for a class
+
 // getting term result for a whole class
 // gettiing a session result for a student
 // getting a session result for a class

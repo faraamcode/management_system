@@ -7,5 +7,3 @@
     "class_id" : "6",
     "role" : "staff",
     "subject_id": "9"
-
-    
