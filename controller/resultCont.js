@@ -84,8 +84,72 @@ if(result.length === 0){
 // getting mideterm for a class
 
 // getting term result for a whole class
+exports.getClassTermResult = async(req, res, next)=>{
+  const fieldvalue = [
+      req.body.term,
+      req.body.session
+    ]
+    const field = [
+      'term',
+      'session'
+    ] 
+const result = await QueryMultiple.fetchByMultiple(table, field, fieldvalue)
+if(result.length === 0){
+  return res.send({
+      message : "no result found"
+  })
+} else if(result.length > 0){
+return res.send(result);
+}else{
+  return res.send({
+      message :" error occured"
+  })
+}
+}
 // gettiing a session result for a student
+exports.getStudentSessionResult = async(req, res, next)=>{
+  const fieldvalue = [
+      req.body.admission_no,
+      req.body.session
+    ]
+    const field = [
+  'admission_no',
+      'session'
+    ] 
+const result = await QueryMultiple.fetchByMultiple(table, field, fieldvalue)
+if(result.length === 0){
+  return res.send({
+      message : "no result found"
+  })
+} else if(result.length > 0){
+return res.send(result);
+}else{
+  return res.send({
+      message :" error occured"
+  })
+}
+}
 // getting a session result for a class
+exports.getClassSessionResult = async(req, res, next)=>{
+  const fieldvalue = [
+      req.body.session
+    ]
+    const field = [
+      'session'
+    ] 
+const result = await QueryMultiple.fetchByMultiple(table, field, fieldvalue)
+if(result.length === 0){
+  return res.send({
+      message : "no result found"
+  })
+} else if(result.length > 0){
+return res.send(result);
+}else{
+  return res.send({
+      message :" error occured"
+  })
+}
+}
 
 /*
 ==========
