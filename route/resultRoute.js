@@ -11,11 +11,18 @@ ROUTES
 */
 // inputing new result
 router.post("/result", resultController.insertNewResult)
+
 // getting term result for a studennt
 router.get('/result/term', resultController.getStudentTermResult)
+
 // getting term result for a whole class
+router.get("/result/term/class", resultController.getClassTermResult)
+
 // gettiing a session result for a student
+router.get("/result/session/student", resultController.getStudentSessionResult)
+
 // getting a session result for a class
+router.get("/result/session/class", resultController.getClassSessionResult)
 
 /*
 ==========
