@@ -56,13 +56,17 @@ exports.insertNewResult = async (req, res, next)=>{
       }
 }
 let Maxresult = []
+
 const fetchMax = async (arr,term, session)=>{
   if(arr.length ===0 ) return Maxresult
  
    const subject = arr[0]
     const max =  await pool.query("SELECT MAX(total) AS maximumscore FROM year1_result_table WHERE subject_id = $1 AND term = $2 AND session= $3", [arr[0], term, session])
     const maxValue = max.rows[0]
-    Maxresult.push({subject,  maxValue})
+    const min =  await pool.query("SELECT MIN(total) AS minimumscore FROM year1_result_table WHERE subject_id = $1 AND term = $2 AND session= $3", [arr[0], term, session])
+    const minValue = min.rows[0]
+    Maxresult.push({subject,  ...maxValue, ...minValue})
+   
     return fetchMax(arr.slice(1), term, session)
   
 }
@@ -83,14 +87,14 @@ const result = await QueryMultiple.fetchByMultiple(table, field, fieldvalue)
 const subjects = [... new Set(result.map((subject)=>{
   return subject.subject_id
 }))]
-const minimumscore = await  fetchMax(subjects, req.body.term, req.body.session)
-console.log(minimumscore);
+const MinMax = await  fetchMax(subjects, req.body.term, req.body.session)
+
 if(result.length === 0){
     return res.send({
         message : "no result found"
     })
 } else if(result.length > 0){
- return res.send({result,minimumscore});
+ return res.send({result,MinMax});
 }else{
     return res.send({
         message :" error occured"
