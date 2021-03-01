@@ -55,6 +55,17 @@ exports.insertNewResult = async (req, res, next)=>{
         res.send({ erclass_id})
       }
 }
+let Maxresult = []
+const fetchMax = async (arr,term, session)=>{
+  if(arr.length ===0 ) return Maxresult
+ 
+   const subject = arr[0]
+    const max =  await pool.query("SELECT MAX(total) AS maximumscore FROM year1_result_table WHERE subject_id = $1 AND term = $2 AND session= $3", [arr[0], term, session])
+    const maxValue = max.rows[0]
+    Maxresult.push({subject,  maxValue})
+    return fetchMax(arr.slice(1), term, session)
+  
+}
 // geting midterm result for a student
 // getting term result for a studennt
 exports.getStudentTermResult = async(req, res, next)=>{
@@ -69,12 +80,17 @@ exports.getStudentTermResult = async(req, res, next)=>{
         'session'
       ] 
 const result = await QueryMultiple.fetchByMultiple(table, field, fieldvalue)
+const subjects = [... new Set(result.map((subject)=>{
+  return subject.subject_id
+}))]
+const minimumscore = await  fetchMax(subjects, req.body.term, req.body.session)
+console.log(minimumscore);
 if(result.length === 0){
     return res.send({
         message : "no result found"
     })
 } else if(result.length > 0){
- return res.send(result);
+ return res.send({result,minimumscore});
 }else{
     return res.send({
         message :" error occured"
@@ -106,6 +122,7 @@ return res.send(result);
   })
 }
 }
+
 // gettiing a session result for a student
 exports.getStudentSessionResult = async(req, res, next)=>{
   const fieldvalue = [
@@ -129,6 +146,7 @@ return res.send(result);
   })
 }
 }
+
 // getting a session result for a class
 exports.getClassSessionResult = async(req, res, next)=>{
   const fieldvalue = [
