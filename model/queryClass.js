@@ -82,6 +82,19 @@ module.exports = class Query {
       .join(' AND ')
     return this.data
   }
+  static LeftJoinTurnArray(table, fields, start) {
+    this.fields = fields // array is expected
+    this.start = start + 1
+    this.leftjoin = table
+    this.data = this.fields
+      .map((field, index) => {
+        const value = `${this.leftjoin}.${field} = $${index + this.start}`
+
+        return value
+      })
+      .join(' AND ')
+    return this.data
+  }
   // update by id
   static async updateByID(table, field, fieldvalue, updatefield, updateValeu) {
     this.table = table // string
@@ -110,4 +123,5 @@ module.exports = class Query {
     )
     return result.rowCount
   }
+
 }

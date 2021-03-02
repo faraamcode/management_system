@@ -10,6 +10,7 @@ ROUTES
 ==========
 */
 // inputing new result
+router.get('/result/test', resultController.testResult)
 router.post("/result", resultController.insertNewResult)
 
 // getting term result for a studennt
@@ -29,6 +30,7 @@ router.get("/result/session/class", resultController.getClassSessionResult)
 LOGICS
 ==========
 */
+
 // getting the heightest and the lowest score a particular subject
 
 

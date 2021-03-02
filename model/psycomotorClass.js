@@ -30,4 +30,17 @@ module.exports = class Psycomotor extends Query{
         this.result  = await pool.query(`SELECT * FROM ${this.table} WHERE ${this.fields}`, this.fieldvalue)
         return this.result.rows
     }
+    static async fetchByMultipleLeftJoin(table1, table2, fieldtofectch, relation, fields, fieldvalue){
+        // table, fields, fieldvalue
+        this.table1 = table1 
+        this.table2 = table2
+        this.fieldtofectch = fieldtofectch
+        this.relation = relation
+        this.fields = Query.LeftJoinTurnArray(this.table1, fields, 0)
+        this.fieldvalue = fieldvalue
+     
+        this.result  = await pool.query(`SELECT ${this.fieldtofectch} FROM ${this.table1} LEFT JOIN ${this.table2} ON ${this.relation} WHERE ${this.fields}`,this.fieldvalue)
+        return this.result.rows
+    }
+    
 }
