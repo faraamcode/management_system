@@ -3,7 +3,6 @@ const pool = require('../db/connect')
 const { fieldvalue } = require('../model/psycomotorClass')
 const Query = require('../model/psycomotorClass')
 const table = 'year1_attendance'
-
 // inserting new record on th table
 
 exports.insertNewAttendance = async (req, res, next) => {
@@ -50,22 +49,23 @@ exports.insertNewAttendance = async (req, res, next) => {
   }
   // deleting students by admission no
   
-  exports.DeleteComment = async (req, res, next) => {
+  exports.DeleteAttendance = async (req, res, next) => {
     const fields = await Query.turnUpdateArrayWithAND(['admission_no', 'term', 'session'])
     const fieldvalue = [req.body.admission_no, req.body.term, req.body.session]
     const result = await Query.DeleteWithMultiple(table, fields, fieldvalue)
     if (result === 1) {
       res.send({
-        message: `${req.body.admission_no} psycomotor successfully deleted`,
+        message: `${req.body.admission_no} Attendance  successfully deleted`,
       })
     }
   }
   // updating psycomotor by multiple clause
   
-  exports.UpdateComment = async (req, res, next) => {
-    const updatefields = ['class_teacher']
+  exports.UpdateAttendance = async (req, res, next) => {
+    //   note that the field to be updated needs to be sent too
+    const updatefields = [req.body.updatefield] // the actual field name should be provided(present_time or absent_time or time_school_open)
     const clausefields = ['admission_no', 'term', 'session']
-    const fieldvalue = [req.body.class_teacher, req.body.admission_no, req.body.term, req.body.session]
+    const fieldvalue = [req.body.update, req.body.admission_no, req.body.term, req.body.session]
     const result = await Query.UpdateWithMultiple(table, updatefields, clausefields, fieldvalue)
     if (result === 1) {
       res.send({

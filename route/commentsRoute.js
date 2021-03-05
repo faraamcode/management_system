@@ -1,14 +1,14 @@
 const pool = require('../db/connect')
 const express = require('express')
-const attendanceController = require('../controller/attendanceCont')
+const commentsController = require('../controller/commentsCont')
 const router = express.Router()
 
-// inserting new attendance into the table
-router.post('/attendance', attendanceController.insertNewAttendance)
-// getting a student attendance using admission, term, session
-router.get('/attendance/student', attendanceController.fetchByMultiple)
+// inserting new comment into the table
+router.post('/comment', commentsController.insertNewComment)
+// getting a student comment using admission, term, session
+router.get('/comment/student', commentsController.fetchByMultiple)
 // updating a student comment using admission, term , session
-router.post('/attendance/update', attendanceController.UpdateAttendance)
+router.post('/comment/update', commentsController.UpdateComment)
 //  deleting a student comment using admission, term, session
-router.post('/attendance/delete', attendanceController.DeleteAttendance)
+router.post('/comment/delete', commentsController.DeleteComment)
 module.exports = router
