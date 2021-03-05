@@ -62,7 +62,7 @@ exports.insertNewSchedule = async (req, res, next) => {
     const result = await Query.UpdateWithMultiple(table, updatefields, clausefields, fieldvalue)
     if (result === 1) {
       res.send({
-        message: `${req.body.admission_no} psycomotor successfully updated`,
+        message: `${req.body.term} psycomotor successfully updated`,
       })
     }else{
       res.send({

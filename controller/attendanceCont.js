@@ -23,7 +23,6 @@ exports.insertNewAttendance = async (req, res, next) => {
       'class_id',
       'term',
       'session',
-      'class_teacher',
       'time_school_open',
       'present_time',
       'absent_time'

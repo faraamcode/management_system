@@ -65,7 +65,7 @@ exports.insertNewComment = async (req, res, next) => {
     const result = await Query.DeleteWithMultiple(table, fields, fieldvalue)
     if (result === 1) {
       res.send({
-        message: `${req.body.admission_no} psycomotor successfully deleted`,
+        message: `${req.body.admission_no} comment successfully deleted`,
       })
     }
   }
@@ -78,7 +78,7 @@ exports.insertNewComment = async (req, res, next) => {
     const result = await Query.UpdateWithMultiple(table, updatefields, clausefields, fieldvalue)
     if (result === 1) {
       res.send({
-        message: `${req.body.admission_no} psycomotor successfully updated`,
+        message: `${req.body.admission_no} comment successfully updated`,
       })
     }else{
       res.send({
