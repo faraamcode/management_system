@@ -42,22 +42,23 @@ exports.insertNewSchedule = async (req, res, next) => {
   }
   // deleting students by admission no
   
-  exports.DeleteComment = async (req, res, next) => {
-    const fields = await Query.turnUpdateArrayWithAND(['admission_no', 'term', 'session'])
-    const fieldvalue = [req.body.admission_no, req.body.term, req.body.session]
+  exports.DeleteSchedule = async (req, res, next) => {
+    const fields = await Query.turnUpdateArrayWithAND(['term', 'session'])
+    const fieldvalue = [req.body.term, req.body.session]
     const result = await Query.DeleteWithMultiple(table, fields, fieldvalue)
     if (result === 1) {
       res.send({
-        message: `${req.body.admission_no} psycomotor successfully deleted`,
+        message: `${req.body.admission_no} schedule successfully deleted`,
       })
     }
   }
   // updating psycomotor by multiple clause
   
-  exports.UpdateComment = async (req, res, next) => {
-    const updatefields = ['class_teacher']
-    const clausefields = ['admission_no', 'term', 'session']
-    const fieldvalue = [req.body.class_teacher, req.body.admission_no, req.body.term, req.body.session]
+  exports.UpdateSchedule = async (req, res, next) => {
+    //   note that the field to be updated needs to be sent too
+    const updatefields = [req.body.updatefield] // the actual field name should be provided(closing_time or open_time)
+    const clausefields = ['term', 'session']
+    const fieldvalue = [req.body.update, req.body.term, req.body.session]
     const result = await Query.UpdateWithMultiple(table, updatefields, clausefields, fieldvalue)
     if (result === 1) {
       res.send({
