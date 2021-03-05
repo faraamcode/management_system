@@ -7,3 +7,23 @@
     "class_id" : "6",
     "role" : "staff",
     "subject_id": "9"
+
+
+
+    CREATE TABLE year1_comments ( id BIGSERIAL NOT NULL PRIMARY KEY,
+ class_id VARCHAR(255) NOT NULL,
+ admission_no VARCHAR(255) NOT NULL,
+ term VARCHAR(255) NOT NULL,
+ affective_domain VARCHAR(255) NOT NULL,
+ grade VARCHAR(255) NOT NULL,
+ session VARCHAR(255) NOT NULL
+ );
+  CREATE TABLE year1_attendance ( id BIGSERIAL NOT NULL PRIMARY KEY,
+ class_id VARCHAR(255) NOT NULL,
+ admission_no VARCHAR(255) NOT NULL,
+ term VARCHAR(255) NOT NULL,
+time_school_open INT,
+present INT,
+absent INT,
+ session VARCHAR(255) NOT NULL
+ );

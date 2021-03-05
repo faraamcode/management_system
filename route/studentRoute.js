@@ -3,7 +3,7 @@ const express = require('express')
 const jwt = require("jsonwebtoken");
 const router = express.Router()
 const studentController = require('../controller/studentCont')
-const verifyToken = (req, res, next)=>{
+const verifyToken = (req, res, next) => {
   const token = req.body.authorization
   jwt.verify(token, "roemichs", (err, authData)=>{
     if (err) {
