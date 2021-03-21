@@ -1,6 +1,8 @@
 const express = require('express')
 const pool = require('../db/connect')
 const Query = require('../model/queryClass')
+const bcrypt = require("bcryptjs")
+const jwt = require("jsonwebtoken")
 const table = 'teacher_tbl'
 
 // reading of or feching of staffs
@@ -9,7 +11,8 @@ exports.fechAllStaffs = async (req, res, next) => {
   try {
     const result = await Query.fetchAll(table)
     if (result) {
-      res.send(result)
+      const userdata = req.token;
+      res.status(200).json({result, userdata})
     } else {
       res.send({
         message: 'error occured',
@@ -22,6 +25,7 @@ exports.fechAllStaffs = async (req, res, next) => {
 //  inserting new staff into the table
 
 exports.insertNewStaff = async (req, res, next) => {
+  const hashed = await bcrypt.hash(req.body.password, 10);
   const fieldvalue = [
     req.body.first_name,
     req.body.other_name,
@@ -31,7 +35,8 @@ exports.insertNewStaff = async (req, res, next) => {
     req.body.title,
     req.body.class_id,
     req.body.role,
-    req.body.subject_id
+    req.body.subject_id,
+    hashed
   ]
   const field = [
     'first_name',
@@ -42,10 +47,20 @@ exports.insertNewStaff = async (req, res, next) => {
     'title',
     'class_id',
     'role',
-    'subject_id'
+    'subject_id',
+    'password'
   ]
 
   const QueryInstance = new Query(table, field)
+  const ifExist = await QueryInstance.fetchByid(req.body.email, 'email')
+
+  if (ifExist.length ===1 ) {
+    return res.status(400).json({
+      message : "user already exist"
+    })
+  }
+
+
   QueryInstance.turnArray()
   try {
     const result = await QueryInstance.postAll(fieldvalue)
@@ -126,4 +141,78 @@ exports.getStaffByAdmission = async (req, res, next) => {
   const result = await Querynew.fetchByid(email, 'email')
   res.send(result)
 }
+//  teachers login controler
+exports.teacherLogin = async (req, res, next) => {
+  const email = req.body.email
+  const password = req.body.password
+  
+  const Querynew = new Query(table, null)
+  const result = await Querynew.fetchByid(email, 'email')
+  if (result.length < 1) {
+    return res.status(401).json({
+      message : "user does not exist"
+    })
+  }else{
 
+    if (result[0].role !=="teacher") {
+      return res.status(401).json({
+        message : "User is not a teacher"
+      }) 
+    }
+
+   const dbpassword = result[0].password
+   const isSigned = await bcrypt.compare(password, dbpassword)
+   if (!isSigned) {
+    res.status(401).json({
+      message :'invalid password'
+    })
+   }else{
+     const user = {
+       email : req.body.email,
+       role: result[0].role
+     }
+     jwt.sign({user}, "roemichsteacher", { expiresIn: '2h' }, (err, token)=>{
+       if(!err) res.status(200).json({token})
+     })
+   }
+
+  }
+}
+exports.adminLogin = async (req, res, next) => {
+  const email = req.body.email
+  const password = req.body.password
+  
+  const Querynew = new Query(table, null)
+  const result = await Querynew.fetchByid(email, 'email')
+  if (result.length < 1) {
+    return res.status(401).json({
+      message : "user does not exist"
+    })
+
+  }else{
+
+    if (result[0].role !=="admin") {
+      return res.status(401).json({
+        message : "User is not an Admin"
+      }) 
+    }
+
+   const dbpassword = result[0].password
+   const isSigned = await bcrypt.compare(password, dbpassword)
+   if (!isSigned) {
+    res.status(401).json({
+      message :'invalid password'
+    })
+
+   }else{
+     const user = {
+       email : req.body.email,
+       role: result[0].role
+     }
+     jwt.sign({user}, "roemichsadmin", { expiresIn: 60 * 60 * 2 }, (err, token)=>{
+       if(!err) res.status(200).json({token})
+     })
+   }
+
+  }
+}

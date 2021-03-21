@@ -30,7 +30,7 @@ exports.insertNewStudent = async (req, res, next) => {
   const Querynew = new Query(table, null)
   const ifExist = await Querynew.fetchByid(req.body.admission_no, 'admission_no')
   if (ifExist.length === 1) {
-    return res.send({
+    return res.status(400).json({
       message : "user already exist"
     })
   }else if (ifExist.length === 0) {
@@ -200,7 +200,7 @@ if (result.length === 1) {
       role : "user"
 
     }
-    jwt.sign({user}, "roemichs", (err, token)=>{
+    jwt.sign({user}, "roemichs",{ expiresIn: 60 * 60 }, (err, token)=>{
       return res.send({otherDetails, token})
     })
     
