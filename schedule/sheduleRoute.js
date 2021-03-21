@@ -1,6 +1,6 @@
 const pool = require('../db/connect')
 const express = require('express')
-const scheduleController = require('../controller/sheduleCont')
+const scheduleController = require('./sheduleCont')
 const router = express.Router()
 
 // inserting new attendance into the table

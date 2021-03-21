@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const pool = require('../db/connect')
-const subjectController = require('../controller/subjectCont')
+const subjectController = require('./subjectCont')
 // reading of subject table
 router.get('/subject', subjectController.getSubject)
 // creating a new subject on the table

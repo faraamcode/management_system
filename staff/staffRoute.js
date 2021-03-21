@@ -1,6 +1,6 @@
 const pool = require('../db/connect')
 const express = require('express')
-const staffController = require('../controller/staffCont')
+const staffController = require('./staffCont')
 const router = express.Router()
 
 const verifyToken = (req, res, next) => {

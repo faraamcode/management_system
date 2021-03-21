@@ -5,6 +5,8 @@ const pool = require('../db/connect')
 const Query = require('../model/queryClass')
 const table = 'students_tbl'
 
+
+
 // reading of or feching of students
 
 exports.fechAllStudents = async (req, res, next) => {
@@ -194,7 +196,9 @@ if (result.length === 1) {
     const otherDetails = result[0]
     const user = {
       admission_no,
-      password
+      password,
+      role : "user"
+
     }
     jwt.sign({user}, "roemichs", (err, token)=>{
       return res.send({otherDetails, token})

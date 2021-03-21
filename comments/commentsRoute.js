@@ -1,6 +1,6 @@
 const pool = require('../db/connect')
 const express = require('express')
-const commentsController = require('../controller/commentsCont')
+const commentsController = require('./commentsCont')
 const router = express.Router()
 
 // inserting new comment into the table

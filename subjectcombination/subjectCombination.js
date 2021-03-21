@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const pool = require('../db/connect')
-const subjectCombController = require('../controller/subjectcombCont')
+const subjectCombController = require('./subjectcombCont')
 
 // reading of subject combination table
 router.get('/subjectcombination', subjectCombController.fechAllSubjectComb)

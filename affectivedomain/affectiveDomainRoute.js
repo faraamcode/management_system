@@ -1,6 +1,6 @@
 const pool = require('../db/connect')
 const express = require('express')
-const affectiveController = require('../controller/affectiveCont')
+const affectiveController = require('./affectiveCont')
 const router = express.Router()
 
 //  get the entire affective domain

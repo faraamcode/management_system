@@ -1,22 +1,8 @@
 const pool = require('../db/connect')
 const express = require('express')
-const jwt = require("jsonwebtoken");
 const router = express.Router()
-const studentController = require('../controller/studentCont')
-const verifyToken = (req, res, next) => {
-  const token = req.body.authorization
-  jwt.verify(token, "roemichs", (err, authData)=>{
-    if (err) {
-      return res.status(403).json({
-        message: "invalid token"
-      })
-    }else{
-      req.token = authData
-    }
-  })
- 
-  next();
-}
+const studentController = require('./studentCont')
+const {verifyToken} = require('../util/studentVerification')
 router.get('/student', verifyToken, studentController.fechAllStudents)
 router.get('/student/:id', async (req, res, next) => {
   const admission_no = req.params.id
@@ -29,7 +15,7 @@ router.get('/student/:id', async (req, res, next) => {
   res.send(student)
 })
 
-router.post('/student/class', verifyToken, studentController.getStudentByClassId)
+router.post('/student/class',  studentController.getStudentByClassId)
 router.post('/student/admission', studentController.getStudentByAdmission)
 router.post('/student/delete', studentController.deletebyAdmission)
 router.post('/student', studentController.insertNewStudent)

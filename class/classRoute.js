@@ -1,9 +1,9 @@
 const express = require('express')
-const classController = require('../controller/classCont')
+const classController = require('./classCont')
 const { restart } = require('nodemon')
 const router = express.Router()
 const pool = require('../db/connect')
-const { route } = require('./studentRoute')
+const { route } = require('../student/studentRoute')
 // reading of class table
 router.get('/class', classController.getClass)
 // creating a new class on the table

@@ -1,6 +1,6 @@
 const pool = require('../db/connect')
 const express = require('express')
-const psycomotorController = require('../controller/psycomotorCont')
+const psycomotorController = require('./psycomotorCont')
 const router = express.Router()
 
 //  get all the psycomotor 
