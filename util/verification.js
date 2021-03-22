@@ -12,13 +12,16 @@ exports.verifyStudentToken = (req, res, next) => {
           message: "invalid token"
         })
       }else{
-          req.token = authData
+
+        req.token = authData
+
+        next();
       }
-      
+        
     })
-   
-    next();
   }
+
+
 exports.verifyTeacherToken= (req, res, next) => {
     const token = req.body.authorization
     if(!token){
@@ -31,13 +34,18 @@ exports.verifyTeacherToken= (req, res, next) => {
         return res.status(500).json({
           message: "invalid token"
         })
+      }else{
+
+        req.token = authData
+
+        next();
       }
-            req.token = authData
         
     })
    
-    next();
   }
+
+  
 exports.verifyAdminToken= (req, res, next) => {
     const token = req.body.authorization
     if(!token){
@@ -50,10 +58,13 @@ exports.verifyAdminToken= (req, res, next) => {
         return res.status(500).json({
           message: "invalid token"
         })
+      }else{
+
+        req.token = authData
+
+        next();
       }
-            req.token = authData
         
     })
    
-    next();
   }

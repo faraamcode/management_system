@@ -9,9 +9,11 @@ exports.insertNewAttendance = async (req, res, next) => {
   const checkfields = ['admission_no', 'term', 'session']
   const checkfieldvalue = [req.body.admission_no, req.body.term, req.body.session]
   const isAvailable = await Query.fetchByMultiple(table, checkfields, checkfieldvalue)
-  if (isAvailable.length > 0)  res.status(400).json({
+  if (isAvailable.length > 0)  {
+   return  res.status(400).json({
     message : "already exist"
   })
+}
     const fieldvalue = [
       req.body.admission_no,
       req.body.class_id,
@@ -57,7 +59,7 @@ exports.insertNewAttendance = async (req, res, next) => {
     const fields = await Query.turnUpdateArrayWithAND(['admission_no', 'term', 'session'])
     const fieldvalue = [req.body.admission_no, req.body.term, req.body.session]
     const result = await Query.DeleteWithMultiple(table, fields, fieldvalue)
-    if (result === 1) {
+    if (result >= 1) {
       res.status(202).json({
         message: `${req.body.admission_no} Attendance  successfully deleted`,
       })
@@ -68,9 +70,9 @@ exports.insertNewAttendance = async (req, res, next) => {
       
     }
   }
-  
+
+
   // updating psycomotor by multiple clause
-  
   exports.UpdateAttendance = async (req, res, next) => {
     //   note that the field to be updated needs to be sent too
     const updatefields = [req.body.updatefield] // the actual field name should be provided(present_time or absent_time or time_school_open)
@@ -87,8 +89,9 @@ exports.insertNewAttendance = async (req, res, next) => {
       })
     }
   }
+
+
   //   fetching psycomotor using multiple 
-  
   exports.fetchByMultiple = async(req, res, next)=>{
       const fields = ['admission_no', 'term', 'session']
       const fieldvalue = [req.body.admission_no, req.body.term, req.body.session]
