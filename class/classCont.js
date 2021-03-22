@@ -55,11 +55,11 @@ exports.updateById = async (req, res, next) => {
     updatevalue
   )
   if (result === 1) {
-    res.send({
+    res.status(201).json({
       message: 'upaded succesfully',
     })
   } else {
-    res.send({
+    res.status(401).json({
       message: 'error occured',
     })
   }
@@ -69,7 +69,13 @@ exports.getClassById = async (req, res, next) => {
   const class_id = req.params.id
   const Querynew = new Query('class_tbl', null)
   const result = await Querynew.fetchByid(class_id, 'id')
-  res.send(result)
+  if (result.length > 0 ) {
+    res.status(200).json(result)
+  }else{
+    res.status(400).json({
+      message : "no record found"
+    })
+  }
 }
 
 exports.deleteClassById = async (req, res, next) => {
@@ -82,7 +88,7 @@ exports.deleteClassById = async (req, res, next) => {
       message: 'class deleted succesfully',
     })
   } else {
-    res.send({
+    res.status(400).json({
       message: 'error occured',
     })
   }
