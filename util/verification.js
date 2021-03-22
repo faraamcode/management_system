@@ -17,6 +17,11 @@ exports.verifyStudentToken = (req, res, next) => {
   }
 exports.verifyTeacherToken= (req, res, next) => {
     const token = req.body.authorization
+    if(!token){
+      return res.status(403).json({
+        message : "no token provided"
+      })
+    }
     jwt.verify(token, "roemichsteacher", (err, authData)=>{
       if (err) {
         return res.status(500).json({

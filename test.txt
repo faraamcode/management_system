@@ -27,3 +27,180 @@ present INT,
 absent INT,
  session VARCHAR(255) NOT NULL
  );
+
+
+
+
+  {
+        "firstname": "Ibrahim",
+        "lastname": "Abdulrasaq",
+        "contact": {
+            "email": "favourdemo@gmail.com",
+            "phone": "+2348162380054",
+            "website": "www.ibrahimabdulrasaq.com",
+            "linkedin": "linkedin.com/in/ibrahim-abdulrasaq-761841199/",
+            "github": "github.com/faraamcode"
+        },
+        "skills": {
+            "details": [
+                {
+                    "type": "Programming Languages",
+                    "items": [
+                        "Javascript",
+                        "Node Js",
+                        "Php",
+                        "HTML",
+                        "CSS"
+                    ]
+                },
+                {
+                    "type": "Web Frameworks",
+                    "items": [
+                        "Express",
+                        "ReactJs",
+                        "React-Native",
+                        "tailwind",
+                        "Bootstrap"
+                    ]
+                },
+                {
+                    "type": "Databases",
+                    "items": [
+                        "MySQL",
+                        "Postgres",
+                        "MongoDb"
+                    ]
+                },
+                {
+                    "type": "Tools",
+                    "items": [
+                        "Git",
+                        "VsCode",
+                        "Github"
+                    ]
+                },
+                {
+                    "type": "Interests",
+                    "items": [
+                        "solving problems",
+                        "Software Development",
+                        "Web Development"
+                    ]
+                }
+            ]
+        },
+        "github_projects": {
+            "items": [
+                {
+                    "project_name": "Online Compuer Based Test System",
+                    "tagline": "[Web App](https://github.com/orifavour/BethelChurchiOSAppBackend)",
+                    "description": [
+                        "Web Application for testing students, setting and managing of school exams."
+                    ],
+                    "technology_used": {
+                        "tools": [
+                            "PHP",
+                            "Javascript",
+                            "MySQL"
+                        ]
+                    }
+                },
+                {
+                    "project_name": "SAU Honors College",
+                    "tagline": "[iOS App ](https://github.com/orifavour/iOSHonorsCollege)",
+                    "description": [
+                        "iOS App designed for SAU Honors College  to improve the mobile experience of students, faculty, and friends of the college."
+                    ],
+                    "technology_used": {
+                        "tools": [
+                            "Swift",
+                            "Xcode"
+                        ]
+                    }
+                }
+            ]
+        },
+        "other_projects": {
+            "items": [
+                {
+                    "headline": "iOS App – Bethel Church, Magnolia",
+                    "points": [
+                        "Designed an iOS app for Bethel Church, to reduce printing of bulletins, and to let members have direct access to podcasts, upcoming events etc."
+                    ],
+                    "technology_used": {
+                        "tools": [
+                            "Swift",
+                            "MySQL",
+                            "PHP"
+                        ]
+                    }
+                },
+                {
+                    "headline": "Course Selector – Computer Science Dept. SAU",
+                    "points": [
+                        "Web App for seamless course selection and registration"
+                    ],
+                    "technology_used": {
+                        "tools": [
+                            "HTML5",
+                            "CSS3",
+                            "PHP",
+                            "MySQL"
+                        ]
+                    }
+                }
+            ]
+        },
+        "work_experience": {
+            "items": [
+                {
+                    "title": "Software Developer",
+                    "organisation": "Southern Arkansas University",
+                    "location": "Magnolia, AR",
+                    "from": "January 2017",
+                    "to": "Present",
+                    "details": [
+                        "Working closely with my professors on various researches & projects"
+                    ],
+                    "technology_used": {
+                        "tools": [
+                            "Xcode",
+                            "Swift",
+                            "Java",
+                            "HTML5",
+                            "CSS3",
+                            "PHP"
+                        ]
+                    }
+                }
+            ]
+        },
+        "involvement": {
+            "organizations": [
+                "Volunteer, Magnolia Blossom, OCT 2016"
+            ]
+        },
+        "education": {
+            "schools": [
+                {
+                    "degree": "Bachelor of Science",
+                    "major": "Computer Science",
+                    "institution": "Southern Arkansas University",
+                    "graduation_year": 2020
+                }
+            ]
+        },
+        "research_experience": {
+            "items": [
+                {
+                    "title": "Web Hacking",
+                    "organisation": "National Collegiate Honors Council",
+                    "from": "February 2017",
+                    "to": "April 2017",
+                    "points": [
+                        "Implemented encryption methods (MD5 and SHA-1)to secure a previously unsecure Web App"
+                    ]
+                }
+            ]
+        }
+    }
