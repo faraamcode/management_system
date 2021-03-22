@@ -31,6 +31,8 @@ absent INT,
 
 
 
+
+
   {
         "firstname": "Ibrahim",
         "lastname": "Abdulrasaq",
@@ -106,15 +108,30 @@ absent INT,
                     }
                 },
                 {
-                    "project_name": "SAU Honors College",
+                    "project_name": "Result Management System",
                     "tagline": "[iOS App ](https://github.com/orifavour/iOSHonorsCollege)",
                     "description": [
                         "iOS App designed for SAU Honors College  to improve the mobile experience of students, faculty, and friends of the college."
                     ],
                     "technology_used": {
                         "tools": [
-                            "Swift",
-                            "Xcode"
+                            "NodeJs",
+                            "Postgres",
+                            "ReactJs"
+                        ]
+                    }
+                },
+                {
+                    "project_name": "Online School",
+                    "tagline": "[iOS App ](https://github.com/orifavour/iOSHonorsCollege)",
+                    "description": [
+                        "iOS App designed for SAU Honors College  to improve the mobile experience of students, faculty, and friends of the college."
+                    ],
+                    "technology_used": {
+                        "tools": [
+                            "NodeJs",
+                            "Postgres",
+                            "ReactJs"
                         ]
                     }
                 }

@@ -11,7 +11,7 @@ router.get('/affective', affectiveController.fetchAllAffective)
 // inserting new affective domain 
 router.post("/affective", verifyTeacherToken, affectiveController.insertNewAffective)
 // deleting a staff with email
-router.post("/affective/delete", verifyAdminToken,affectiveController.DeleteAffective)
+router.post("/affective/delete", verifyAdminToken, affectiveController.DeleteAffective)
 
 //  getting  psycomotor using admission, term, session
 router.post("/affective/term", affectiveController.fetchByMul)

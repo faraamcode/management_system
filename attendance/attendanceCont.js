@@ -6,8 +6,13 @@ const table = 'year1_attendance'
 // inserting new record on th table
 
 exports.insertNewAttendance = async (req, res, next) => {
+  const checkfields = ['admission_no', 'term', 'session']
+  const checkfieldvalue = [req.body.admission_no, req.body.term, req.body.session]
+  const isAvailable = await Query.fetchByMultiple(table, checkfields, checkfieldvalue)
+  if (isAvailable.length > 0)  res.status(400).json({
+    message : "already exist"
+  })
     const fieldvalue = [
-      
       req.body.admission_no,
       req.body.class_id,
       req.body.term,
@@ -33,11 +38,11 @@ exports.insertNewAttendance = async (req, res, next) => {
     try {
       const result = await QueryInstance.postAll(fieldvalue)
       if (result.rowCount === 1) {
-        res.send({
+        res.status(201).json({
           message: 'new attendance created added saved',
         })
       } else {
-        res.send({
+        res.status(500).json({
           message: 'error occured',
         })
       }
@@ -46,18 +51,24 @@ exports.insertNewAttendance = async (req, res, next) => {
       res.send({ error })
     }
   }
+
   // deleting students by admission no
-  
   exports.DeleteAttendance = async (req, res, next) => {
     const fields = await Query.turnUpdateArrayWithAND(['admission_no', 'term', 'session'])
     const fieldvalue = [req.body.admission_no, req.body.term, req.body.session]
     const result = await Query.DeleteWithMultiple(table, fields, fieldvalue)
     if (result === 1) {
-      res.send({
+      res.status(202).json({
         message: `${req.body.admission_no} Attendance  successfully deleted`,
       })
+    }else{
+      res.status(400).json({
+        message: `${req.body.admission_no} Attendance not found`,
+      })
+      
     }
   }
+  
   // updating psycomotor by multiple clause
   
   exports.UpdateAttendance = async (req, res, next) => {
@@ -67,12 +78,12 @@ exports.insertNewAttendance = async (req, res, next) => {
     const fieldvalue = [req.body.update, req.body.admission_no, req.body.term, req.body.session]
     const result = await Query.UpdateWithMultiple(table, updatefields, clausefields, fieldvalue)
     if (result === 1) {
-      res.send({
+      res.status(202).json({
         message: `${req.body.admission_no} psycomotor successfully updated`,
       })
     }else{
-      res.send({
-        "message" : "error occured"
+      res.status(400).json({
+        "message" : "not updated"
       })
     }
   }
@@ -82,7 +93,12 @@ exports.insertNewAttendance = async (req, res, next) => {
       const fields = ['admission_no', 'term', 'session']
       const fieldvalue = [req.body.admission_no, req.body.term, req.body.session]
       const result = await Query.fetchByMultiple(table, fields, fieldvalue)
-     
-        res.send(result)
+      if (result.length > 0 ) {
+        res.status(200).json(result)
+      }else{
+        res.status(400).json({
+          message : "no record found"
+        })
+      }
   
   }
