@@ -1,7 +1,23 @@
 # Result Management System
 
-## staff api created
+This is the backend (RESTAPi) for  result management system. It is web application written by IBRAHIM ABDULRASAQ for managing student result,
+progress and other school activities.
+This application is built with nodeJs and postgres Database.
+``
+npm i
+// the app will run on
+http://localhost:3000/
+``
 
-post api to insert new staff
-/post - route
-# new_repo
+## This application has three major division;
+- student
+- teacher
+- school adminitsrator
+# Student
+Student are eligible to some certain routes in the application 
+``
+this will allow the student to login
+and get token
+http://localhost:3000/student/login
+``
+
