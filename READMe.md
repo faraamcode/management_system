@@ -13,11 +13,5 @@ http://localhost:3000/
 - student
 - teacher
 - school adminitsrator
-# Student
-Student are eligible to some certain routes in the application 
-``
--this will allow the student to login
-and get token
--http://localhost:3000/student/login
-``
+
 
