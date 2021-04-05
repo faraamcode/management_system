@@ -171,7 +171,7 @@ exports.teacherLogin = async (req, res, next) => {
        email : req.body.email,
        role: result[0].role
      }
-     jwt.sign({user}, "roemichsteacher", { expiresIn: '2h' }, (err, token)=>{
+     jwt.sign({user}, "roemichsteacher",{ expiresIn: 60 * 60 * 2 }, (err, token)=>{
        if(!err) res.status(200).json({token})
      })
    }

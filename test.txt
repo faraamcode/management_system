@@ -37,7 +37,7 @@ absent INT,
         "firstname": "Ibrahim",
         "lastname": "Abdulrasaq",
         "contact": {
-            "email": "favourdemo@gmail.com",
+            "email": "abdulrasaqalagbede@gmail.com",
             "phone": "+2348162380054",
             "website": "www.ibrahimabdulrasaq.com",
             "linkedin": "linkedin.com/in/ibrahim-abdulrasaq-761841199/",
@@ -52,7 +52,8 @@ absent INT,
                         "Node Js",
                         "Php",
                         "HTML",
-                        "CSS"
+                        "CSS",
+                        "typescript"
                     ]
                 },
                 {
@@ -109,9 +110,9 @@ absent INT,
                 },
                 {
                     "project_name": "Result Management System",
-                    "tagline": "[iOS App ](https://github.com/orifavour/iOSHonorsCollege)",
+                    "tagline": "[Web App ](https://github.com/orifavour/iOSHonorsCollege)",
                     "description": [
-                        "iOS App designed for SAU Honors College  to improve the mobile experience of students, faculty, and friends of the college."
+                        "A web application (RESTapi) with React frontend for managing student results, progress and other school activities"
                     ],
                     "technology_used": {
                         "tools": [
@@ -123,46 +124,15 @@ absent INT,
                 },
                 {
                     "project_name": "Online School",
-                    "tagline": "[iOS App ](https://github.com/orifavour/iOSHonorsCollege)",
+                    "tagline": "[Web App ](https://github.com/orifavour/iOSHonorsCollege)",
                     "description": [
-                        "iOS App designed for SAU Honors College  to improve the mobile experience of students, faculty, and friends of the college."
+                        "A web application that allow student and teacher to have a live class experience with live video conference, chat, and send and receiving of notes and asssignments"
                     ],
                     "technology_used": {
                         "tools": [
-                            "NodeJs",
-                            "Postgres",
-                            "ReactJs"
-                        ]
-                    }
-                }
-            ]
-        },
-        "other_projects": {
-            "items": [
-                {
-                    "headline": "iOS App – Bethel Church, Magnolia",
-                    "points": [
-                        "Designed an iOS app for Bethel Church, to reduce printing of bulletins, and to let members have direct access to podcasts, upcoming events etc."
-                    ],
-                    "technology_used": {
-                        "tools": [
-                            "Swift",
-                            "MySQL",
-                            "PHP"
-                        ]
-                    }
-                },
-                {
-                    "headline": "Course Selector – Computer Science Dept. SAU",
-                    "points": [
-                        "Web App for seamless course selection and registration"
-                    ],
-                    "technology_used": {
-                        "tools": [
-                            "HTML5",
-                            "CSS3",
-                            "PHP",
-                            "MySQL"
+                            "Php",
+                            "Javascript",
+                            "Bootstrap"
                         ]
                     }
                 }
@@ -172,21 +142,46 @@ absent INT,
             "items": [
                 {
                     "title": "Software Developer",
-                    "organisation": "Southern Arkansas University",
-                    "location": "Magnolia, AR",
-                    "from": "January 2017",
+                    "organisation": "Roemichs International Schools",
+                    "location": "Ilorin, Nigeria",
+                    "from": "January 2019",
                     "to": "Present",
                     "details": [
-                        "Working closely with my professors on various researches & projects"
+                        "Develop full-stack application which process, analyze and present data visually",
+                        "Improve databases queries of existed API  for better performance ",
+                         "Liaise and work with other developers from different companies as needed"
+ 
                     ],
                     "technology_used": {
                         "tools": [
-                            "Xcode",
-                            "Swift",
-                            "Java",
+                            "NodeJs",
+                            "Php",
+                            "Javascript",
                             "HTML5",
                             "CSS3",
-                            "PHP"
+                            "React"
+                        ]
+                    }
+                },
+                {
+                    "title": "Web Developer",
+                    "organisation": "Craft IT",
+                    "location": "Ilorin, Nigeria",
+                    "from": "July 2018",
+                    "to": "Dec. 2019",
+                    "details": [
+
+                        "Improve databases queries of existed API  for better performance ",
+                         "Liaise and work with other developers from different companies as needed"
+ 
+                    ],
+                    "technology_used": {
+                        "tools": [
+                            "Php",
+                            "Javascript",
+                            "HTML5",
+                            "CSS3",
+                            "Bootstrap"
                         ]
                     }
                 }
@@ -202,12 +197,16 @@ absent INT,
                 {
                     "degree": "Bachelor of Science",
                     "major": "Computer Science",
-                    "institution": "Southern Arkansas University",
-                    "graduation_year": 2020
+                    "institution": "University of Ilorin",
+                    "graduation_year": 2016
                 }
             ]
         },
-        "research_experience": {
+        "other_projects": {
+            "items": [
+            ]
+        },
+        "": {
             "items": [
                 {
                     "title": "Web Hacking",

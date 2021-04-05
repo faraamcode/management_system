@@ -50,7 +50,7 @@ exports.insertNewAttendance = async (req, res, next) => {
       }
     } catch (error) {
       console.log(error)
-      res.send({ error })
+      res.status(500)({ message :"internal error"})
     }
   }
 
