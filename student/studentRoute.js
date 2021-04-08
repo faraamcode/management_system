@@ -2,8 +2,9 @@ const pool = require('../db/connect')
 const express = require('express')
 const router = express.Router()
 const studentController = require('./studentCont')
-const {verifyStudentToken} = require('../util/verification')
-router.get('/student', verifyStudentToken, studentController.fechAllStudents)
+const {verifyStudentToken, verifyAdminToken} = require('../util/verification')
+
+router.get('/student', studentController.fechAllStudents)
 router.get('/student/:id', async (req, res, next) => {
   const admission_no = req.params.id
   const data = await pool.query(
@@ -17,8 +18,8 @@ router.get('/student/:id', async (req, res, next) => {
 
 router.post('/student/class',  studentController.getStudentByClassId)
 router.post('/student/admission', studentController.getStudentByAdmission)
-router.post('/student/delete', studentController.deletebyAdmission)
-router.post('/student', studentController.insertNewStudent)
+router.post('/student/delete', verifyAdminToken, studentController.deletebyAdmission)
+router.post('/student', verifyAdminToken, studentController.insertNewStudent)
 router.post('/student/update', studentController.updateStudentByAdmission)
 router.post("/student/login", studentController.studentSignIn)
 module.exports = router

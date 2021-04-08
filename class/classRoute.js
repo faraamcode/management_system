@@ -15,5 +15,5 @@ router.post('/class/:id', verifyAdminToken, classController.updateById)
 router.get('/class/:id', classController.getClassById)
 // deleting class by id
 
-router.get('/class/delete/:id', verifyAdminToken, classController.deleteClassById)
+router.post('/class/delete/:id', verifyAdminToken, classController.deleteClassById)
 module.exports = router

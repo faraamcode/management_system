@@ -101,9 +101,14 @@ exports.deletebyAdmission = async (req, res, next) => {
   const admission = req.body.admission_no
   const result = await Query.deleteByID(table, 'admission_no', [admission])
   if (result === 1) {
-    res.send({
+    res.status(201).json({
       message: `student ${admission} successfully deleted`,
     })
+  }else{
+    res.status(400).json({
+      message: `process failed`,
+    })
+    
   }
 }
 

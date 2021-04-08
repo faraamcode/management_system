@@ -2,7 +2,7 @@ const pool = require('../db/connect')
 const express = require('express')
 const commentsController = require('./commentsCont')
 const router = express.Router()
-const {verifyTeacherToken, verifyTeacherToken, verifyAdminToken} =require("../util/verification")
+const {verifyTeacherToken, verifyAdminToken} =require("../util/verification")
 
 // inserting new comment into the table
 router.post('/comment', verifyTeacherToken, commentsController.insertNewComment)
