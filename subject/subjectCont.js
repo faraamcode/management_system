@@ -12,11 +12,17 @@ exports.getSubject = async (req, res, next) => {
 exports.postSubject = async (req, res, next) => {
   const subject_name = req.body.subject_name
   const Querynew = new Query('subject_tbl', ['subject_name'])
-  const result = Querynew.postAll([subject_name])
-  if (result) {
-    return res.send({
+  const result = await Querynew.postAll([subject_name])
+  console.log(result);
+  if (result.rowCount === 1) {
+    return res.status(201).json({
       message: 'subject saved',
     })
+  }else{
+    return res.status(201).json({
+      message: 'error occured',
+    })
+
   }
 }
 
