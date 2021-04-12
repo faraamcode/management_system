@@ -4,13 +4,18 @@ const jwt = require("jsonwebtoken");
 const router = express.Router()
 const resultController = require('./resultCont')
 
+router.post("/result/check", resultController.checkIfAvailable)
 /*
 ==========
 ROUTES
 ==========
 */
 // inputing new result
-router.post("/result", resultController.insertNewResult)
+router.post("/result", resultController.checkIfAvailable, resultController.insertNewResult)
+// inputing new second ca result 
+router.post("/result/secondca",  resultController.insertSecondCa)
+// inputing new exam score
+router.post("/result/exam",  resultController.insertExam)
 
 // getting term result for a studennt
 router.get('/result/term', resultController.getStudentTermResult)

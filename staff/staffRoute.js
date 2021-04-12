@@ -7,7 +7,7 @@ const router = express.Router()
 
 
 //  get the entire staff data
-router.get('/staff', verifyAdminToken, staffController.fechAllStaffs)
+router.get('/staff', staffController.fechAllStaffs)
 
 // inserting new staff 
 router.post("/staff", staffController.insertNewStaff)

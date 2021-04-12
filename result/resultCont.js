@@ -49,13 +49,44 @@ exports.testResult = async (req, res, next)=>{
 
   res.send({result, MinMax})
 }
-// inputing new result
+
+// checking if a result is availabe Note: this will be used as middleware to check fro result availability avoid redundancy
+exports.checkIfAvailable = async(req, res, next)=>{
+  const fieldvalue = [
+    req.body.class_id,
+    req.body.subject_id,
+    req.body.admission_no,
+    req.body.term,
+    req.body.session
+  ]
+  const field = [
+    'class_id',
+    'subject_id',
+    'admission_no',
+    'term',
+    'session'
+  ]
+  const result = await QueryMultiple.fetchByMultiple(table, field, fieldvalue)
+  if (result.length > 0) {
+  return res.status(401).json({
+     message : "result available"
+   })
+  }else{
+    next()
+
+  }
+}
+
+// inputing new result 
 exports.insertNewResult = async (req, res, next)=>{
     const fieldvalue = [
         req.body.class_id,
         req.body.subject_id,
         req.body.admission_no,
         req.body.term,
+        req.body.first_assignment,
+        req.body.second_assignment,
+        req.body.welcome_test,
         req.body.first_ca,
         req.body.second_ca,
         req.body.exam,
@@ -68,6 +99,9 @@ exports.insertNewResult = async (req, res, next)=>{
         'subject_id',
         'admission_no',
         'term',
+        'first_assignment',
+        'second_assignment',
+        'welcome_test',
         'first_ca',
         'second_ca',
         'exam',
@@ -75,17 +109,17 @@ exports.insertNewResult = async (req, res, next)=>{
         'grade',
         'session'
       ]
-    
+      
       const QueryInstance = new Query(table, field)
       QueryInstance.turnArray()
       try {
         const result = await QueryInstance.postAll(fieldvalue)
         if (result.rowCount === 1) {
-          res.send({
+          res.status(201).json({
             message: 'new  result  added ',
           })
         } else {
-          res.send({
+          res.status(500).json({
             message: 'error occured',
           })
         }
@@ -94,6 +128,75 @@ exports.insertNewResult = async (req, res, next)=>{
         res.send({ erclass_id})
       }
 }
+//  updating result I.e inserting second ca 
+
+exports.insertSecondCa = async(req, res, next)=>{
+//  console.log("work");
+  const fieldvalue = [
+    req.body.second_assignment,
+    req.body.second_ca,
+    req.body.class_id,
+    req.body.subject_id,
+    req.body.admission_no,
+    req.body.term,
+    req.body.session,
+  ]
+  const updatefield = [
+    'second_assignment',
+    'second_ca'
+  ]
+  const clausefield = [
+    'class_id',
+    'subject_id',
+    'admission_no',
+    'term',
+    'session'
+  ]
+  const result = await QueryMultiple.UpdateWithMultiple(table, updatefield, clausefield, fieldvalue);
+  if (result === 1 ) {
+    res.status(201).json({
+      message : "result saved"
+    })
+  }else{
+    res.status(500).json({
+      message : "bad request"
+    })
+  }
+}
+
+// updating for exam
+exports.insertExam = async(req, res, next)=>{
+//  console.log("work");
+  const fieldvalue = [
+    req.body.exam,
+    req.body.class_id,
+    req.body.subject_id,
+    req.body.admission_no,
+    req.body.term,
+    req.body.session,
+  ]
+  const updatefield = [
+    'exam'
+  ]
+  const clausefield = [
+    'class_id',
+    'subject_id',
+    'admission_no',
+    'term',
+    'session'
+  ]
+  const result = await QueryMultiple.UpdateWithMultiple(table, updatefield, clausefield, fieldvalue);
+  if (result === 1 ) {
+    res.status(201).json({
+      message : "result saved"
+    })
+  }else{
+    res.status(500).json({
+      message : "bad request"
+    })
+  }
+}
+
 
 // geting midterm result for a student
 // getting term result for a studennt
