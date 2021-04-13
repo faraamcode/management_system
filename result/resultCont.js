@@ -26,6 +26,12 @@ const fetchMax = async (arr,term, session)=>{
   
 }
 
+// inserting total scores seperately
+exports.findTotal = async(req, res, next)=>{
+  const {class_id,subject_id, admission_no, term, session } = req.body
+  const result = await pool.query(`INSERT INTO ${table} SET total = welcome_test + first_ca + first_assignment + second_ca + second_assignment + exam WHERE class_id =$1 AND subject_id = $2 AND admission_no =$3 AND term =$4 AND session = $5`, [class_id,subject_id, admission_no, term, session]);
+  console.log(result);
+}
 
 exports.testResult = async (req, res, next)=>{
   const fieldvalue = [
@@ -68,9 +74,39 @@ exports.checkIfAvailable = async(req, res, next)=>{
   ]
   const result = await QueryMultiple.fetchByMultiple(table, field, fieldvalue)
   if (result.length > 0) {
-  return res.status(401).json({
-     message : "result available"
-   })
+    const field = [
+      'class_id',
+      'subject_id',
+      'admission_no',
+      'term',
+      'session'
+    ]
+   const updatefield = [
+     'welcome_test',
+     'first_assignment',
+     'first_ca'
+   ]
+   const allfields = [
+     req.body.welcome_test,
+     req.body.first_assignment,
+     req.body.first_ca,
+     req.body.class_id,
+     req.body.subject_id,
+     req.body.admission_no,
+     req.body.term,
+     req.body.session
+   ] 
+   const updateResult = await QueryMultiple.UpdateWithMultiple(table, updatefield, field, allfields);
+   if (updateResult === 1 ) {
+     res.status(201).json({
+       message : "result updated"
+     })
+   }else{
+     res.status(500).json({
+       message : "bad request"
+     })
+   }
+
   }else{
     next()
 
@@ -187,12 +223,22 @@ exports.insertExam = async(req, res, next)=>{
   ]
   const result = await QueryMultiple.UpdateWithMultiple(table, updatefield, clausefield, fieldvalue);
   if (result === 1 ) {
-    res.status(201).json({
-      message : "result saved"
-    })
+    const {class_id,subject_id, admission_no, term, session } = req.body
+    const resultTotal = await pool.query(`UPDATE ${table} SET total = (welcome_test + first_ca + first_assignment + second_ca + second_assignment + exam) WHERE class_id =$1 AND subject_id = $2 AND admission_no =$3 AND term =$4 AND session = $5`, [class_id,subject_id, admission_no, term, session]);
+    if (resultTotal.rowCount ===1 ) {
+      
+      res.status(201).json({
+        message : "Result saved"
+      })
+    }else{
+      res.status(500).json({
+        message : "Result not saved"
+      })
+
+    }
   }else{
     res.status(500).json({
-      message : "bad request"
+      message : "You have not created the record"
     })
   }
 }
