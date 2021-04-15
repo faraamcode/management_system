@@ -14,6 +14,7 @@ ROUTES
 router.post("/result", resultController.checkIfAvailable, resultController.insertNewResult)
 // inputing new second ca result 
 router.post("/result/secondca",  resultController.insertSecondCa)
+
 // inputing new exam score
 router.post("/result/exam",  resultController.insertExam)
 

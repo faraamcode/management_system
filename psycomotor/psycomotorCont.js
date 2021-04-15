@@ -52,7 +52,7 @@ exports.insertNewPsycomotor = async (req, res, next) => {
       const result = await QueryInstance.postAll(fieldvalue)
       if (result.rowCount === 1) {
         res.status(201).json({
-          message: 'new  psycommotor added saved',
+          message: 'new  psycommotor added saved'
         })
       } else {
         res.status(500)({
