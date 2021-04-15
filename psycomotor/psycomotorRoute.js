@@ -7,7 +7,7 @@ const router = express.Router()
 router.get('/psycomotor', psycomotorController.fetchAllpsycomotor)
 
 // inserting new psycomotor
-router.post("/psycomotor",psycomotorController.insertNewPsycomotor)
+router.post("/psycomotor",psycomotorController.insertNewPsycomotor, psycomotorController.UpdatePsycomotor)
 // delete new psycomotor using admission, term, session, sycomotor name
 router.post("/psycomotor/delete", psycomotorController.DeletePsycomotor)
 

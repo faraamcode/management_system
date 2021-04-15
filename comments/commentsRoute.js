@@ -5,7 +5,7 @@ const router = express.Router()
 const {verifyTeacherToken, verifyAdminToken} =require("../util/verification")
 
 // inserting new comment into the table
-router.post('/comment', verifyTeacherToken, commentsController.insertNewComment)
+router.post('/comment', commentsController.insertNewComment, commentsController.UpdateComment)
 // getting a student comment using admission, term, session
 router.get('/comment/student', commentsController.fetchByMultiple)
 // updating a student comment using admission, term , session

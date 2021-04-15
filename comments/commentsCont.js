@@ -25,26 +25,22 @@ exports.insertNewComment = async (req, res, next) => {
   const checkfieldvalue = [req.body.admission_no, req.body.term, req.body.session]
   const isAvailable = await Query.fetchByMultiple(table, checkfields, checkfieldvalue)
   if (isAvailable.length > 0)  {
-    return  res.status(400).json({
-     message : "already exist"
-   })
- }
+   next()
+ }else{
     const fieldvalue = [
       
       req.body.admission_no,
-      req.body.class_id,
       req.body.term,
       req.body.session,
-      req.body.class_teacher,
+      req.body.comment_value,
     
      
     ]
     const field = [
       'admission_no',
-      'class_id',
       'term',
       'session',
-      'class_teacher'
+      req.body.comment_type,
     ]
   
     const QueryInstance = new Query(table, field)
@@ -64,6 +60,7 @@ exports.insertNewComment = async (req, res, next) => {
       console.log(error)
       res.status(500)({ message :"internal error"})
     }
+  }
   }
   // deleting students by admission no
   
@@ -85,9 +82,9 @@ exports.insertNewComment = async (req, res, next) => {
   // updating psycomotor by multiple clause
   
   exports.UpdateComment = async (req, res, next) => {
-    const updatefields = ['class_teacher']
+    const updatefields = [req.body.comment_type]
     const clausefields = ['admission_no', 'term', 'session']
-    const fieldvalue = [req.body.class_teacher, req.body.admission_no, req.body.term, req.body.session]
+    const fieldvalue = [req.body.comment_value, req.body.admission_no, req.body.term, req.body.session]
     const result = await Query.UpdateWithMultiple(table, updatefields, clausefields, fieldvalue)
     if (result === 1) {
       res.status(202).json({

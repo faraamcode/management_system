@@ -21,21 +21,29 @@ exports.fetchAllpsycomotor = async(req, res, next)=>{
 // inserting new record on th table
 
 exports.insertNewPsycomotor = async (req, res, next) => {
+  //  check the presence of the psycomotor
+  const checkfields = ['admission_no', 'term', 'session']
+  const checkfieldvalue = [req.body.admission_no, req.body.term, req.body.session]
+  const isAvailable = await Query.fetchByMultiple(table, checkfields, checkfieldvalue)
+  if (isAvailable.length > 0) {
+    next()
+  }else{
+    // new insertion
+
     const fieldvalue = [
       req.body.admission_no,
       req.body.class_id,
       req.body.term,
-      req.body.sycomoto_name,
+      req.body.session,
       req.body.grade,
-      req.body.session
     ]
     const field = [
       'admission_no',
       'class_id',
       'term',
-      'sycomoto_name',
-      'grade',
-      'session'
+      'session',
+      req.body.psycomotor_name,
+  
     ]
   
     const QueryInstance = new Query(table, field)
@@ -43,18 +51,21 @@ exports.insertNewPsycomotor = async (req, res, next) => {
     try {
       const result = await QueryInstance.postAll(fieldvalue)
       if (result.rowCount === 1) {
-        res.send({
+        res.status(201).json({
           message: 'new  psycommotor added saved',
         })
       } else {
-        res.send({
+        res.status(500)({
           message: 'error occured',
         })
       }
     } catch (error) {
       console.log(error)
-      res.send({ error })
+      res.status(500)({
+        message: 'error occured',
+      })
     }
+  }
   }
   // deleting students by admission no
   
@@ -71,16 +82,17 @@ exports.insertNewPsycomotor = async (req, res, next) => {
   // updating psycomotor by multiple clause
 
   exports.UpdatePsycomotor = async (req, res, next) => {
-    const updatefields = ['grade']
-    const clausefields = ['admission_no', 'term', 'session', 'sycomoto_name']
-    const fieldvalue = [req.body.grade, req.body.admission_no, req.body.term, req.body.session, req.body.sycomoto_name]
+      
+      const updatefields = [req.body.psycomotor_name]
+    const clausefields = ['admission_no', 'term', 'session']
+    const fieldvalue = [req.body.grade, req.body.admission_no, req.body.term, req.body.session]
     const result = await Query.UpdateWithMultiple(table, updatefields, clausefields, fieldvalue)
     if (result === 1) {
-      res.send({
+      res.status(201).json({
         message: `${req.body.admission_no} psycomotor successfully updated`,
       })
     }else{
-        res.send({
+        res.status(500).json({
             "message" : "error occured"
         })
     }
