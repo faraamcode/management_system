@@ -12,12 +12,9 @@ exports.verifyStudentToken = (req, res, next) => {
           message: "invalid token"
         })
       }else{
-
         req.token = authData
-
         next();
-      }
-        
+      }     
     })
   }
 
