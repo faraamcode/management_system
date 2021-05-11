@@ -9,14 +9,14 @@ const {verifyTeacherToken, verifyAdminToken} = require("../util/verification")
 router.get('/affective', affectiveController.fetchAllAffective)
 
 // inserting new affective domain 
-router.post("/affective", verifyTeacherToken, affectiveController.insertNewAffective)
+router.post("/affective", affectiveController.insertNewAffective, affectiveController.UpdateAffective)
 // deleting a staff with email
-router.post("/affective/delete", verifyAdminToken, affectiveController.DeleteAffective)
+router.post("/affective/delete",affectiveController.DeleteAffective)
 
 //  getting  psycomotor using admission, term, session
 router.post("/affective/term", affectiveController.fetchByMul)
 
 // updating psycomotor using admission, term, session
-router.post("/affective/update", verifyTeacherToken, affectiveController.UpdateAffective)
+router.post("/affective/update",  affectiveController.UpdateAffective)
 
 module.exports = router

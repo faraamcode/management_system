@@ -25,27 +25,26 @@ exports.insertNewAffective = async (req, res, next) => {
   const checkfieldvalue = [req.body.admission_no, req.body.term, req.body.session]
   const isAvailable= await Query.fetchByMultiple(table, checkfield, checkfieldvalue)
   if (isAvailable.length > 0) {
-   return  res.status(403).json({message : " already inserted"})
-  }
+   next()
+  }else {
+
+  
 
     const fieldvalue = [
       req.body.admission_no,
       req.body.class_id,
       req.body.term,
-      req.body.affective_domain,
+      req.body.session,
       req.body.grade,
-      req.body.session
+  
     ]
     const field = [
       'admission_no',
       'class_id',
       'term',
-      'affective_domain',
-      'grade',
-      'session'
+      'session',
+      req.body.affective_name,
     ]
-
-
 
     const QueryInstance = new Query(table, field)
     QueryInstance.turnArray()
@@ -62,14 +61,17 @@ exports.insertNewAffective = async (req, res, next) => {
       }
     } catch (error) {
       
-      res.status(500)({ message : "internal error" })
+      res.status(500).json({ message : "internal error" })
     }
+
+
+  }
   }
   // deleting students by admission no
   
   exports.DeleteAffective = async (req, res, next) => {
-    const fields = await Query.turnUpdateArrayWithAND(['admission_no', 'term', 'session','affective_domain'])
-    const fieldvalue = [req.body.admission_no, req.body.term, req.body.session, req.body.affective_domain]
+    const fields = await Query.turnUpdateArrayWithAND(['admission_no', 'term', 'session'])
+    const fieldvalue = [req.body.admission_no, req.body.term, req.body.session]
     const result = await Query.DeleteWithMultiple(table, fields, fieldvalue)
     if (result === 1) {
       res.status(202).json({
@@ -85,9 +87,9 @@ exports.insertNewAffective = async (req, res, next) => {
   // updating psycomotor by multiple clause
 
   exports.UpdateAffective = async (req, res, next) => {
-    const updatefields = ['grade']
-    const clausefields = ['admission_no', 'term', 'session', 'affective_domain']
-    const fieldvalue = [req.body.grade, req.body.admission_no, req.body.term, req.body.session, req.body.affective_domain]
+    const updatefields = [req.body.affective_name]
+    const clausefields = ['admission_no', 'term', 'session']
+    const fieldvalue = [req.body.grade, req.body.admission_no, req.body.term, req.body.session]
     const result = await Query.UpdateWithMultiple(table, updatefields, clausefields, fieldvalue)
     if (result === 1) {
       res.status(202).json({
