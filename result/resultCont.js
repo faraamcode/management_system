@@ -11,7 +11,6 @@ ROUTES
 ==========
 */
 let Maxresult = [];
-
 const fetchMax = async (arr, term, session) => {
   if (arr.length === 0) return Maxresult;
 
@@ -251,6 +250,10 @@ exports.insertExam = async (req, res, next) => {
 // geting midterm result for a student
 // getting term result for a studennt
 exports.getStudentTermResult = async (req, res, next) => {
+  const admission_no = req.body.admission_no;
+
+  const studentData = await Query.fetchByAdmission(admission_no);
+  console.log(studentData);
   const fieldvalue = [req.body.admission_no, req.body.term, req.body.session];
   const field = ["admission_no", "term", "session"];
   const fieldtofectch =

@@ -1,28 +1,32 @@
-const express = require('express')
-const cors = require('cors')
-const studentRoute = require('./student/studentRoute')
-const staffRoute = require('./staff/staffRoute')
-const classRoute = require('./class/classRoute')
-const subjectRoute = require('./subject/subjectRoute')
-const commentsRoute = require('./comments/commentsRoute')
-const subjectcombinationroute = require('./subjectcombination/subjectCombination')
-const psycomotorRoute = require("./psycomotor/psycomotorRoute")
-const affectiveRoute = require("./affectivedomain/affectiveDomainRoute")
-const resultRoute = require("./result/resultRoute")
-const attendanceRoute = require('./attendance/attendanceRoute')
-const scheduleRoute = require('./schedule/sheduleRoute')
-const app = express()
-app.use(cors())
-app.use(express.json())
-app.use(attendanceRoute)
-app.use(scheduleRoute)
-app.use(resultRoute)
-app.use(commentsRoute)
-app.use(affectiveRoute)
-app.use(subjectcombinationroute)
-app.use(studentRoute)
-app.use(staffRoute)
-app.use(classRoute)
-app.use(subjectRoute)
-app.use(psycomotorRoute)
-app.listen(3000)
+const express = require("express");
+const bodyParser = require("body-parser");
+const cors = require("cors");
+const studentRoute = require("./student/studentRoute");
+const staffRoute = require("./staff/staffRoute");
+const classRoute = require("./class/classRoute");
+const subjectRoute = require("./subject/subjectRoute");
+const commentsRoute = require("./comments/commentsRoute");
+const subjectcombinationroute = require("./subjectcombination/subjectCombination");
+const psycomotorRoute = require("./psycomotor/psycomotorRoute");
+const affectiveRoute = require("./affectivedomain/affectiveDomainRoute");
+const resultRoute = require("./result/resultRoute");
+const attendanceRoute = require("./attendance/attendanceRoute");
+const scheduleRoute = require("./schedule/sheduleRoute");
+const app = express();
+app.use(express.static("public"));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(cors());
+app.use(express.json());
+app.use(attendanceRoute);
+app.use(scheduleRoute);
+app.use(resultRoute);
+app.use(commentsRoute);
+app.use(affectiveRoute);
+app.use(subjectcombinationroute);
+app.use(studentRoute);
+app.use(staffRoute);
+app.use(classRoute);
+app.use(subjectRoute);
+app.use(psycomotorRoute);
+app.listen(3000);
