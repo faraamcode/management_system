@@ -4,12 +4,25 @@ const bcrypt = require("bcryptjs");
 const pool = require("../db/connect");
 const Query = require("../model/queryClass");
 const QueryMultiple = require("../model/psycomotorClass");
+const pdf = require("html-pdf");
+const cloudinary = require("cloudinary").v2;
 const table = "year1_result_table";
+const pdfTemplate = require("../documents/index.jsx");
+const data = require("../secret/data");
+
 /*
 ==========
 ROUTES
 ==========
 */
+const { cloud_name, api_key, api_secret } = data.cloudinary;
+
+cloudinary.config({
+  cloud_name,
+  api_key,
+  api_secret,
+});
+
 let Maxresult = [];
 const fetchMax = async (arr, term, session) => {
   if (arr.length === 0) return Maxresult;
@@ -250,16 +263,21 @@ exports.insertExam = async (req, res, next) => {
 // geting midterm result for a student
 // getting term result for a studennt
 exports.getStudentTermResult = async (req, res, next) => {
+  console.log(`${__dirname}.pdf`);
+  // cloudinary.uploader
+  //   .upload(`${__dirname}.pdf`)
+  //   .then((result) => console.log(result))
+  //   .catch((err) => console.log(err));
   const admission_no = req.body.admission_no;
 
   const studentData = await Query.fetchByAdmission(admission_no);
-  console.log(studentData);
+  // console.log(studentData);
   const fieldvalue = [req.body.admission_no, req.body.term, req.body.session];
   const field = ["admission_no", "term", "session"];
   const fieldtofectch =
     "welcome_test, first_assignment, first_ca, second_assignment, second_ca, exam, total, subject_name, subject_id";
   const table2 = "subject_tbl";
-  const relation = "year1_result_table.subject_id= subject_tbl.id";
+  const relation = "year1_result_table.subject_id = subject_tbl.id";
   const result = await QueryMultiple.fetchByMultipleLeftJoin(
     table,
     table2,
@@ -278,16 +296,40 @@ exports.getStudentTermResult = async (req, res, next) => {
   const MinMax = await fetchMax(subjects, req.body.term, req.body.session);
 
   if (result.length === 0) {
-    return res.send({
+    return res.status(400).json({
       message: "no result found",
     });
   } else if (result.length > 0) {
-    return res.send({ result, MinMax });
+    pdf
+      .create(pdfTemplate({ studentData, result, MinMax }), {})
+      .toFile("result.pdf", (err) => {
+        if (err) {
+          res.send(Promise.reject());
+        }
+        // res.send(Promise.resolve());
+        console.log("hiii");
+        next();
+      });
+
+    // cloudinary.uploader
+    //   .upload(`${__dirname}.pdf`)
+    //   .then((result) => res.status(200).json({ result }))
+    //   .catch((err) => console.log(err));
+    // const result = await cloudinary.uploader.upload(`${__dirname}/.pdf`);
+    // console.log(result);
+    // return res.status(200).json({ studentData, result, MinMax });
   } else {
-    return res.send({
+    return res.status(500).json({
       message: " error occured",
     });
   }
+};
+
+exports.downloadResult = async (req, res, next) => {
+  cloudinary.uploader
+    .upload(`${__dirname}.pdf`)
+    .then((result) => res.status(200).json({ result }))
+    .catch((err) => console.log(err));
 };
 // getting mideterm for a class
 

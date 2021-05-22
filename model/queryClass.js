@@ -51,7 +51,7 @@ module.exports = class Query {
   static async fetchByAdmission(admission) {
     this.id = admission;
     this.result = await pool.query(
-      `SELECT admission_no, last_name, other_names,parent_no,home_address,admission_type,gender, date_of_birth,passport,parent_name, parent_email, parent_occupation,class_section_name, class_name FROM students_tbl LEFT JOIN class_tbl ON students_tbl.class_id = class_tbl.id WHERE admission_no= $1`,
+      `SELECT admission_no, last_name, other_names,parent_no,home_address,admission_type,gender, date_of_birth,passport,parent_name, parent_email, parent_occupation,class_section_name,class_name, class_id FROM students_tbl LEFT JOIN class_tbl ON students_tbl.class_id = class_tbl.id WHERE admission_no= $1`,
       [this.id]
     );
     this.data = await this.result.rows;

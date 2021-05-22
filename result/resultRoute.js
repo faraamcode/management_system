@@ -26,7 +26,11 @@ router.post("/result/secondca", resultController.insertSecondCa);
 router.post("/result/exam", resultController.insertExam);
 
 // getting term result for a studennt
-router.get("/result/term", resultController.getStudentTermResult);
+router.post(
+  "/result/term",
+  resultController.getStudentTermResult,
+  resultController.downloadResult
+);
 
 // getting term result for a whole class
 router.get("/result/term/class", resultController.getClassTermResult);
@@ -36,20 +40,6 @@ router.get("/result/session/student", resultController.getStudentSessionResult);
 
 // getting a session result for a class
 router.get("/result/session/class", resultController.getClassSessionResult);
-
-router.post("/create-pdf", (req, res) => {
-  pdf.create(pdfTemplate(), {}).toFile("./public/result.pdf", (err) => {
-    if (err) {
-      res.send(Promise.reject());
-    }
-
-    res.send(Promise.resolve());
-  });
-});
-
-router.get("/fetch-pdf", (req, res) => {
-  res.sendFile(`${__dirname}/result.pdf`);
-});
 
 /*
 ==========
