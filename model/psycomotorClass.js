@@ -2,6 +2,7 @@ const pool = require('../db/connect')
 const { turnUpdateArrayWithAND, turnUpdateArrayWithANDWithStartIndex, field } = require('./queryClass')
 const Query = require('./queryClass')
 module.exports = class Psycomotor extends Query{
+    
     constructor(tablename, fieldname) {
         super(tablename, fieldname)
       }

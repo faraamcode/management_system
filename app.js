@@ -13,6 +13,8 @@ const resultRoute = require("./result/resultRoute");
 const attendanceRoute = require("./attendance/attendanceRoute");
 const scheduleRoute = require("./schedule/sheduleRoute");
 const app = express();
+app.use(express.json({ limit: "50mb" }));
+app.use(express.urlencoded({ limit: "50mb", extended: true }));
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());

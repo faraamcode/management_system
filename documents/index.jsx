@@ -12,10 +12,13 @@ module.exports = ({ studentData, result, MinMax }) => {
         padding: 0;
         font-family: 'Sackers Gothic Std';
         font-weight: 500;
-        font-size: 7px;
+        font-size: 5px;
         background: rgb(241,241,241);
         -webkit-print-color-adjust: exact;
         box-sizing: border-box;
+      }
+      tr{
+          height: 10mm;
       }
 .invoice-box {
   max-width: 900px;
@@ -32,7 +35,7 @@ module.exports = ({ studentData, result, MinMax }) => {
 .school-detail table,
 .student-details table,
 .cognitive table {
-  max-height: 90mm;
+//   max-height: 90mm;
   /* background: red; */
   width: 100%;
 }
