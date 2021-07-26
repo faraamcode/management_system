@@ -48,58 +48,60 @@ exports.insertNewStudent = async (req, res, next) => {
     const uploadResponse = await cloudinary.uploader.upload(req.body.image, {
       upload_preset: "ja9yyvue",
     });
-    console.log(uploadResponse);
-    const fieldvalue = [
-      req.body.admission_no,
-      req.body.last_name,
-      req.body.other_names,
-      req.body.parent_no,
-      req.body.home_address,
-      req.body.admission_type,
-      req.body.gender,
-      req.body.date_of_birth,
-      req.body.class_id,
-      req.body.passport,
-      req.body.parent_name,
-      req.body.parent_email,
-      req.body.parent_occupation,
-      req.body.class_section_name,
-      hashed,
-    ];
-    // console.log(req.body.image);
-    const field = [
-      "admission_no",
-      "last_name",
-      "other_names",
-      "parent_no",
-      "home_address",
-      "admission_type",
-      "gender",
-      "date_of_birth",
-      "class_id",
-      "passport",
-      "parent_name",
-      "parent_email",
-      "parent_occupation",
-      "class_section_name",
-      "password",
-    ];
-    const QueryInstance = new Query(table, field);
-    QueryInstance.turnArray();
-    try {
-      const result = await QueryInstance.postAll(fieldvalue);
-      if (result.rowCount === 1) {
-        res.send({
-          message: "new  student added saved",
-        });
-      } else {
-        res.send({
-          message: "error occured",
-        });
+    if (uploadResponse) {
+      console.log(uploadResponse.url);
+      const fieldvalue = [
+        req.body.admission_no,
+        req.body.last_name,
+        req.body.other_names,
+        req.body.parent_no,
+        req.body.home_address,
+        req.body.admission_type,
+        req.body.gender,
+        req.body.date_of_birth,
+        req.body.class_id,
+        uploadResponse.url,
+        req.body.parent_name,
+        req.body.parent_email,
+        req.body.parent_occupation,
+        req.body.class_section_name,
+        hashed,
+      ];
+      // console.log(req.body.image);
+      const field = [
+        "admission_no",
+        "last_name",
+        "other_names",
+        "parent_no",
+        "home_address",
+        "admission_type",
+        "gender",
+        "date_of_birth",
+        "class_id",
+        "passport",
+        "parent_name",
+        "parent_email",
+        "parent_occupation",
+        "class_section_name",
+        "password",
+      ];
+      const QueryInstance = new Query(table, field);
+      QueryInstance.turnArray();
+      try {
+        const result = await QueryInstance.postAll(fieldvalue);
+        if (result.rowCount === 1) {
+          res.send({
+            message: "new  student added saved",
+          });
+        } else {
+          res.send({
+            message: "error occured",
+          });
+        }
+      } catch (error) {
+        console.log(error);
+        res.send({ error });
       }
-    } catch (error) {
-      console.log(error);
-      res.send({ error });
     }
   } else {
     return res.send({
